@@ -1,4 +1,4 @@
-=== Flip The Script! Be The Aggressor | Spam Hammer ===
+=== Flip It On Spammers! Be The Aggressor ===
 Contributors: wpspamhammer
 Tags: post, plugin, admin, posts, comments, page, spam blocker, spam filter plugin, spam blocker plugin, best spam blocker, comment spam blocker, spam, spam comments, spam filter
 Requires at least: 3.0.0
