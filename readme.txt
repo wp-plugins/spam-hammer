@@ -98,7 +98,7 @@ Never again will you run an impotent anti spam solution with endless confusing s
 
 > <b>Try It Risk-Free</b>
 
-The testimonials are there because this is a professional service.  I'm extending a week of Free, completely unlocked usage and support of the plugin to professionals and businesses.  There is zero risk for you.
+I'm extending a week of Free, completely unlocked usage and support of the plugin to professionals and business owners running their sites on WordPress.  There is zero risk for you.
 
 = Compatibility =
 
@@ -107,56 +107,6 @@ The testimonials are there because this is a professional service.  I'm extendin
 _Incompatible with:_ 1. Akismet 2. Jetpack Comments 3. Disquz 4. static HTML caching plugins 5. and any other unlisted comment, registration, or contact form plugin.
 
 _This automatically disables the aforementioned incompatible plugins, except Jetpack._
-
-= Testimonials =
-
-> [Jessi says: Before Spam Hammer, my blog/website was becoming overrun with spam comments. I couldn't get anything done because I had 500+ comments to go through & moderate every time I logged on to my site . I tried everything, captcha, math equations, every plugin I could find to relieve some of the spam, and  NOTHING helped.  The day I tried Spam Hammer, everything changed, it was amazing so easy to use and exceptional at getting through the spam.  I LOVE logging on to  seeing the massive number of blocked spam attempts, as well as the chart of how many attempts per hour.](http://www.animalearthessence.com)
-
-> [Kathy says: Since installing spam hammer, I've seen a sharp decrease in spam comments.](http://www.kathyisawesome.com)
-
-> Tony says: Work perfect, no spam till now and it really save my time.  already Spambot Blocks: 34  (1days)  i set up my Countdown to 19'  i have been blocking : BANGLADESH , BELARUS, CHINA,  INDIA, KAZAKHSTAN,  PAKISTAN, RUSSIAN FEDERATION,TAIWAN,and UKRAINE  great plug ing
-
-> Vitaris says: Just dropping in to say this plugin is a life saver. We've had anti-spam measures in place for years, but in the last couple of weeks bots have started to get around those measures and have been hammering my forums incessantly. This blocks well over 70 spam bots a day, so thank you! I now give a little cheer each time I get a mail notification (activated just for my gratification that another bot was foiled).
-
-> Mick says: Spam Attack Preventions: 105567 Unique Spambots Today 8, Week: 8, Month: 1585, Year: 7469  Been working great for me
-
-> Anders says: Hammer 3-Series is working very well. Before I installed this amazing plugin I got lots of spam and now not a single one, so I will definitely buy this one for my site when trial is over.
-
-> Jeff says: It's working great.
-
-> Sascha says: The Spam Hammer has definitely helped kill all the bots that were accessing my company's forums. Great job on the coding of the mod.
-
-> Andrew says: Don't need to manually approve new users any more. It does such a good job I can let new users straight in to the forum with no manual intervention from me :)
-
-> Jim says: It is hammering away! I have had around 8-10 alerts since I've installed it.
-
-> Rick says: Spam Attack Preventions: 18295 Unique Spambots Today: 15, Week: 362, Month: 597, Year: 597
-
-> Vladmir says: things are looking good. Spammer signups are down, very solid product all in all!
-
-> Jasmit says: the mod is working great and yes now I can say....SPAMMERS SUCK....
-
-> Mark says: I went and pulled this from my stats (from running for about week & a half with SpamHammer 3 platinum):  Spambot Blocks: 31105
-
-> David says: I was spending a 1/2 hour to an hour each day approving new members, and that was with Glowhost and Captcha active. I deactivated Glowhost and I installed this mod a week ago and have had over 5500 spam registrations blocked and I've been able to turn off modded registration. Only one or two people spammers got through. I'm definitely liking this mod.
-
-> Wayne says: I honestly thought this wouldn't be much good but its amazing, only installed it half hour ago and 5 dodgy registrations blocked! INSTALL IT NOW!!!!!!!!!!!!!!
-
-> Jim says: Brilliant Mod! After initial implementation, over 1,600 blocked attempts in less than a 12 hour period.
-
-> Patrick says: Need to say it works like a charm. After installation few days ago had more than 40 bots that where blocked! Great marked as installed! Using vB4.2 Pl3... It saves me a lot of time to ban and remove those and now have to do nothing at all
-
-> Neno says: my programmer loaded it today: I turned it on: caught 12 bots in 30 minutes registering in less than 15 sec. LOVE IT, now i can turn registration back on. TY
-
-> Jason says: already blocked 33 in about 30 minutes on one of our sites. Spam had gotten so bad, we had resorted to manual registrations on all of our sites. (We still do it for other reasons on one of them, which is also the one that this plugin has denied over 30 spammers in the last 1/2 hour). This could be the single-best mod ever made. Thank you, very much.
-
-> Pete says: 10,100 bots rejected so far nice.
-
-> John says: I installed this about a week ago before going to bed, woke up the next morning and found 134 emails from blocked registrants Have it set to 9 seconds and most of them had a time difference between 3 and 5 seconds. Love it!
-
-> Charlie says: What a great mod. Within the first 24 hours I had 50 emails. Works so well I had to turn the emails off. Thank you for sharing!
-
-> Jarret says: Awesome so far! Just installed and have already blocked 2 spammers within 5 minutes of installation.
 
 == Screenshots ==
 
