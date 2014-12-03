@@ -96,7 +96,9 @@ Never again will you run an impotent anti spam solution with endless confusing s
 
 > Try It Risk-Free
 
-I'm extending a week of Free, completely unlocked usage and support of the plugin to professionals and business owners running their sites on WordPress.  There is zero risk for you.
+I'm extending a week of Free, completely unlocked usage and support of the plugin to professionals and businesses running their sites on WordPress.  There is zero risk for you.
+
+Spam Hammer provides enterprise level protection; it is for professional and business sites only.  It is not for hobbyist or personal sites.
 
 = Compatibility =
 
