@@ -82,7 +82,7 @@ Without cloaking, Ad Networks can log suspicious activity. When the Spammer is r
 
 Spam Hammer automatically uncloaks and records these links for reporting. You won’t find many cases where it’s beneficial to allow link cloaking on your site, so all links, spam and ham, are uncloaked.
 
-> Never Again =
+> Never Again
 
 Never again will your real readers' comments be recognized as spam, leaving them wondering if the content they took the time to write on your site even reached the other end.
 
