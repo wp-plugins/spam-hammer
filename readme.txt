@@ -1,6 +1,6 @@
 === Flip It On Spammers! Be The Aggressor ===
 Contributors: wpspamhammer
-Tags: post, plugin, admin, posts, comments, page, spam blocker, spam filter plugin, spam blocker plugin, best spam blocker, comment spam blocker, spam, spam comments, spam filter
+Tags: post, plugin, admin, posts, comments, page, premium, spam blocker, serviceware
 Requires at least: 3.0.0
 Stable tag: 3.9.7.3
 License: GPLv2 or later
