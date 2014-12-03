@@ -2,7 +2,7 @@
 Contributors: wpspamhammer
 Tags: post, plugin, admin, posts, comments, page, spam blocker, spam filter plugin, spam blocker plugin, best spam blocker, comment spam blocker, spam, spam comments, spam filter
 Requires at least: 3.0.0
-Stable tag: 3.9.7.2
+Stable tag: 3.9.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,9 +122,13 @@ _This automatically disables the aforementioned incompatible plugins, except Jet
 
 == Changelog ==
 
+= 3.9.7.3 =
+
+* Now fully compatible with caching plugins.
+
 = 3.9.7.2 =
 
-WordPress.org compliance updates.
+* WordPress.org compliance updates.
 
 = 3.9.7.1 =
 

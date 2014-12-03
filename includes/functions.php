@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "3.9.7.2";
+	const VERSION = "3.9.7.3";
 
 	static $servers = array(
 		'production' => array(
@@ -218,7 +218,7 @@ class SpamHammer {
 
 	public static function adminInit() {
 		if (($plugins = self::getPlugins()) != false):
-			foreach (array("spammers-suck", "w3-total-cache", "wp-super-cache", "quick-cache", "disqus-comment-system", "akismet") as $plugin):
+			foreach (array("spammers-suck", "disqus-comment-system", "akismet") as $plugin):
 				if (in_array($plugin, array_keys($plugins)) && is_plugin_active("{$plugin}/{$plugins[$plugin]['Script']}")):
 					deactivate_plugins("{$plugin}/{$plugins[$plugin]['Script']}");
 				endif;
