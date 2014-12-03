@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "3.9.7.3";
+	const VERSION = "3.9.8";
 
 	static $servers = array(
 		'production' => array(
@@ -21,7 +21,9 @@ class SpamHammer {
 		"honeypot_website_url",
 		"uncloak_website_url",
 		"nuke_comments",
-		"default_policy"
+		"default_policy",
+		"statistics",
+		"retroactive_ping_status"
 	);
 
 	public static function defaultFilters() {
@@ -67,7 +69,9 @@ class SpamHammer {
 		add_filter("default_option_spam_hammer_uncloak_website_url", array(__CLASS__, "defaultOptionTrue"));
 		add_filter("default_option_spam_hammer_nuke_comments", array(__CLASS__, "defaultOptionTrue"));
 
-		add_filter("default_option_spam_hammer_default_policy", array(__CLASS__, "defaultOptionStatistics"));
+		add_filter("default_option_spam_hammer_default_policy", array(__CLASS__, "defaultOptionFalse"));
+		add_filter("default_option_spam_hammer_statistics", array(__CLASS__, "defaultOptionStatistics"));
+		add_filter("default_option_spam_hammer_retroactive_ping_status", array(__CLASS__, "defaultOptionFalse"));
 
 		if (current_user_can("administrator")):
 			foreach (self::$options as $option):
@@ -229,8 +233,17 @@ class SpamHammer {
 			update_option("spam_hammer_version", self::VERSION);
 		endif;
 
+		if (!get_option("spam_hammer_retroactive_ping_status") && get_option("default_ping_status") == "open"):
+			update_option("default_ping_status", "closed");
+			update_option("spam_hammer_retroactive_ping_status", true);
+		endif;
+
 		if (!get_option("spam_hammer_auth_token")):
 			SpamHammer_Network::get("spamhammer", "get");
+
+			global $wpdb;
+
+			$wpdb->query("UPDATE wp_posts SET ping_status='closed' WHERE post_type IN ('post', 'page')");
 		endif;
 
 		if (!($statistics = get_option("spam_hammer_statistics")) || !$statistics['pull'] || $statistics['pull'] <= strtotime("-1 hour")):

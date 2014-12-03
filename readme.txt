@@ -2,7 +2,7 @@
 Contributors: wpspamhammer
 Tags: post, plugin, admin, posts, comments, page, premium, spam blocker, serviceware
 Requires at least: 3.0.0
-Stable tag: 3.9.7.3
+Stable tag: 3.9.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -121,6 +121,12 @@ _This automatically disables the aforementioned incompatible plugins, except Jet
 3. Activate the plugin through the Admin Controls under `Plugins` > `Installed Plugins`.
 
 == Changelog ==
+
+= 3.9.8 =
+
+* Trackbacks and pingbacks are now off by default, retroactively affecting previous pages & posts.
+* "Default Policy" option default selection fix.
+* Statistics Widget fix.
 
 = 3.9.7.3 =
 
