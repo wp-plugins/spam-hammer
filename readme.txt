@@ -104,7 +104,7 @@ I'm extending a week of Free, completely unlocked usage and support of the plugi
 
 1. Standard Comment Form 2. Standard Registration Form 3. _[NEW]_ Contact Form 7
 
-_Incompatible with:_ 1. Akismet 2. Jetpack Comments 3. Disquz 4. static HTML caching plugins 5. and any other unlisted comment, registration, or contact form plugin.
+_Incompatible with:_ 1. Akismet 2. Jetpack Comments 3. Disquz 4. and any other unlisted comment, registration, or contact form plugin.
 
 _This automatically disables the aforementioned incompatible plugins, except Jetpack._
 
