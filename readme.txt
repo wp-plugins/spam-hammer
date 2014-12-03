@@ -12,11 +12,9 @@ Yes, it actually works. Waste Spammers' time. Make Them helpless.
 
 > _"I've always had a problem with Spam - I'd tried every plugin out there, as well as every default feature to keep them at bay but nothing worked as well as I'd hoped, and recently our spam attacks hit a new level, where I needed to moderate everything manually - an exhaustive and time consuming process with 10 spam to every 1 human.  Since installing this and disabling every other feature - I've not had one instance of spam.  Unbelievable.  Thank you very much."_
 
-[Français](http://www.wpspamhammer.com/translate.php?locale=fr&dst=wordpress.org) | [Italiano](http://www.wpspamhammer.com/translate.php?locale=it&dst=wordpress.org) | [Deutsch](http://www.wpspamhammer.com/translate.php?locale=de&dst=wordpress.org) | [Español](http://www.wpspamhammer.com/translate.php?locale=es&dst=wordpress.org)
-
 Install with a simple download and activate -- no setup required.  You can comfortably try the service and contribute back to it as a license owner after using it for some days.
 
-> <b>Yes, This Tool Actually Works</b>
+> Yes, It Actually Works
 
 Most WordPress anti spam tools amount to garbage, both built in to WordPress, and third party plugins. The built in tools are mediocre, and at best force you to babysit new comments and registrations.
 
@@ -30,7 +28,7 @@ If you don’t take the initiative, Spammers walk over you. That’s why Spam Ha
 
 There were many others in a situation similar to yours, who chose to try a tool that fights back. See what other business owners and professionals that tried Spam Hammer say.
 
-= Flip The Script, Be The Aggressor =
+> Flip The Script, Be The Aggressor
 
 Spammers have things to protect as well – things they consider precious and valuable. If you hit them where it hurts, Spammers run in the other direction and look for their next target.
 
@@ -44,7 +42,7 @@ When the owners of spamming services notice this pattern, they attempt to revers
 
 Spam Hammer has several ways to fight for you hands-free, and the most overt among these are 1. Geo blocking 2. Reverse time sink and 3. Ad network slap.
 
-<b>1. Geo Blocking: Common Sense</b>
+> 1. Geo Blocking: Common Sense
 
 Most spam is made on computers outside the home country of your site. Some countries tacitly permit spamming, while others like Bulgaria are safe havens for big spam services due to the country’s laws.
 
@@ -54,7 +52,7 @@ Spam Hammer provides both country and continent blocking. This is especially agg
 
 By default, popular spamming countries are blocked, but you can change these at any time to fit you.
 
-<b>2. Reverse Time Sink: An eye for an eye</b>
+> 2. Reverse Time Sink: An eye for an eye
 
 Spammers enjoy the luxury of being able to click “spam” and blast your site within seconds; over the following seconds, their spam program moves to the other innocent targets and hits them.
 
@@ -70,7 +68,7 @@ This causes Spammers to run around like chickens with their heads cut off, tryin
 
 The optimal timer is 15 seconds long and this is something that generally doesn’t have to be adjusted; though, you do have the option to raise or lower this to what suits you.
 
-<b>3. Ad Network Slap a.k.a. Uncloaking</b>
+> 3. Ad Network Slap a.k.a. Uncloaking
 
 Spam comments always link to one or more sites. Many links are cloaked so you can’t see the actual site until you click the cloaked link are redirected to the real one. And, Spammers aren’t only hiding it from you.
 
@@ -84,7 +82,7 @@ Without cloaking, Ad Networks can log suspicious activity. When the Spammer is r
 
 Spam Hammer automatically uncloaks and records these links for reporting. You won’t find many cases where it’s beneficial to allow link cloaking on your site, so all links, spam and ham, are uncloaked.
 
-= Never Again =
+> Never Again =
 
 Never again will your real readers' comments be recognized as spam, leaving them wondering if the content they took the time to write on your site even reached the other end.
 
@@ -96,7 +94,7 @@ Never again will already registered, legitimate readers, including administrator
 
 Never again will you run an impotent anti spam solution with endless confusing settings or setup that requires technical skills that aren’t in your reach as a busy professional.
 
-> <b>Try It Risk-Free</b>
+> Try It Risk-Free
 
 I'm extending a week of Free, completely unlocked usage and support of the plugin to professionals and business owners running their sites on WordPress.  There is zero risk for you.
 
