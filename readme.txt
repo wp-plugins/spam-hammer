@@ -6,13 +6,11 @@ Stable tag: 3.9.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Yes, it actually works.  Make Them helpless.  Total Spam Attacks: 15,067,619
+"My business blog was shut down by Bluehost because the spam attack on my site was..." Blocks/Total Spam Attacks: 15,067,619
 
 == Description ==
-
+ 
 > _"My business blog was shut down by Bluehost because the spam attack on my site was compromising their server performance. I installed Spam Hammer and from the moment I turned it on until now, 2 days later I have received none of the 2,300+ spam messages sent at my site and everything is running smoothly."_
-
-> _"I've always had a problem with Spam - I'd tried every plugin out there, as well as every default feature to keep them at bay but nothing worked as well as I'd hoped, and recently our spam attacks hit a new level, where I needed to moderate everything manually - an exhaustive and time consuming process with 10 spam to every 1 human.  Since installing this and disabling every other feature - I've not had one instance of spam.  Unbelievable.  Thank you very much."_
 
 Install with a simple download and activate -- no setup required.  You can comfortably try the service and contribute back to it as a license owner after using it for some days.
 
@@ -27,6 +25,8 @@ Others simply don’t work anymore, and you are left reacting to spam invasions.
 Spam must be defended against, right? Wrong. Spam hurts the invaluable image of your business and saps your time – your anti spam must violently fight to destroy the Spammers, not defend against them.
 
 Don’t take the lead and Spammers will walk over you. That’s why Spam Hammer works: it takes the fight to them, instead of waiting for them to bring it to you. Don't take my word for it -- see what others say.
+
+> _"I've always had a problem with Spam - I'd tried every plugin out there, as well as every default feature to keep them at bay but nothing worked as well as I'd hoped, and recently our spam attacks hit a new level, where I needed to moderate everything manually - an exhaustive and time consuming process with 10 spam to every 1 human.  Since installing this and disabling every other feature - I've not had one instance of spam.  Unbelievable.  Thank you very much."_
 
 > Flip The Script, Be The Aggressor
 
