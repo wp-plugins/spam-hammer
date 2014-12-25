@@ -6,7 +6,7 @@ Stable tag: 3.9.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Yes, it actually works.  Make Them helpless.  Total Spam Attacks: 15,066,642
+Yes, it actually works.  Make Them helpless.  Total Spam Attacks: 15,067,619
 
 == Description ==
 
