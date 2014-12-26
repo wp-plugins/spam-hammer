@@ -2,7 +2,7 @@
 Contributors: wpspamhammer
 Tags: post, plugin, admin, posts, comments, page, premium, spam blocker, serviceware
 Requires at least: 3.0.0
-Stable tag: 3.9.8.1
+Stable tag: 3.9.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,6 +145,12 @@ The testimonials are there because this is a professional service. I’m extendi
 3. Activate the plugin through the Admin Controls under `Plugins` > `Installed Plugins`.
 
 == Changelog ==
+
+= 3.9.8.2 =
+
+* CRITICAL: Fixes a bug that prevented the plugin from blocking spam, introduced in 3.9.7.1.
+* Uncloaking is now done on the cloud end, so the setting has been removed.
+* Connection & Account fields are now shown first on the options page.
 
 = 3.9.8.1 =
 

@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "3.9.8.1";
+	const VERSION = "3.9.8.2";
 
 	static $servers = array(
 		'production' => array(
@@ -19,7 +19,6 @@ class SpamHammer {
 		"auth_token",
 		"version",
 		"honeypot_website_url",
-		"uncloak_website_url",
 		"nuke_comments",
 		"default_policy",
 		"statistics",
@@ -66,7 +65,6 @@ class SpamHammer {
 		add_filter("default_option_spam_hammer_version", array(__CLASS__, "defaultVersion"));
 
 		add_filter("default_option_spam_hammer_honeypot_website_url", array(__CLASS__, "defaultOptionTrue"));
-		add_filter("default_option_spam_hammer_uncloak_website_url", array(__CLASS__, "defaultOptionTrue"));
 		add_filter("default_option_spam_hammer_nuke_comments", array(__CLASS__, "defaultOptionTrue"));
 
 		add_filter("default_option_spam_hammer_default_policy", array(__CLASS__, "defaultOptionFalse"));
@@ -167,59 +165,6 @@ class SpamHammer {
 		return $dst_ip ? $dst_ip : $src_ip;
 	}
 
-	public static function getWebsiteUrl($url) {
-		$user_agent = "Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0";
-		$max_redirects = 20;
-		$timeout = 15;
-
-		if (function_exists("get_headers", "timeout") && ini_get("allow_url_fopen")) {
-			stream_context_set_default(array(
-				'http' => compact("max_redirects") + array(
-					'header' => "User-Agent: {$user_agent}"
-				)
-			));
-
-		    if (($headers = @get_headers($url, 1)) != false):
-			    foreach (array_keys($headers) as $key):
-			    	if (preg_match("/^Location$/i", $key) && $key != "Location"):
-			    		$headers["Location"] = $headers[$key];
-			    		unset($headers[$key]);
-			    	endif;
-			    endforeach;
-
-			    if (isset($headers["Location"])):
-			    	if (($location = !is_array($headers["Location"]) ? $headers["Location"] : end($headers["Location"])) != false):
-			    		return $location;
-			    	endif;
-			    endif;
-			endif;
-		}
-
-		if (function_exists("curl_init") && ($ch = curl_init()) != false) {
-			curl_setopt_array($ch, array(
-				CURLOPT_URL => $url,
-				CURLOPT_HTTPHEADER => array(
-					"User-Agent: {$user_agent}"
-				),
-				CURLOPT_RETURNTRANSFER => true,
-				CURLOPT_FOLLOWLOCATION => true,
-				CURLOPT_MAXREDIRS => $max_redirects,
-				CURLOPT_TIMEOUT => $timeout
-			));
-
-			@curl_exec($ch);
-
-			if (($location = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL)) != false):
-				curl_close($ch);
-				return $location;
-			endif;
-
-			curl_close($ch);
-		}
-
-		return $url;
-	}
-
 	public static function adminInit() {
 		if (($plugins = self::getPlugins()) != false):
 			foreach (array("spammers-suck") as $plugin):
@@ -300,7 +245,7 @@ class SpamHammer {
 
 	static function pre_comment_approved($approved, &$comment_data = null) {
 	    if ($comment_data && $comment_data['comment_author_url']):
-	    	$comment_data['comment_author_url'] = self::getWebsiteUrl($comment_data['comment_author_url']);
+	    	$comment_data['comment_author_url'] = $comment_data['comment_author_url'];
 	    endif;
 
 		if (!self::process_form(array('type' => 'comment'))) {
@@ -341,7 +286,7 @@ class SpamHammer {
 			'honeypots' => array(
 				'website_url' => array(
 					'snare' => get_option("spam_hammer_honeypot_website_url"),
-					'input' => isset($_POST['url']) ? self::getWebsiteUrl($_POST['url']) : ""
+					'input' => $_POST['url']
 				)
 			),
 			'user_name' => isset($_POST['author']) ? $_POST['author'] : '',
@@ -388,14 +333,6 @@ class SpamHammer {
 		return $markup;
 	}
 
-	static function register_activation_hook() {
-		# TODO
-	}
-
-	static function register_deactivation_hook() {
-		# TODO
-	}
-
 	static function admin_menu() {
 		global $wp_version;
 
@@ -425,6 +362,11 @@ class SpamHammer {
 		endforeach;
 
 		$input_fields = implode("\n", array(
+			self::template('wp-admin/settings_form/raw', array(
+				'key' => 'spam_hammer_statistics',
+				'name' => __('Connection & Account', 'spam-hammer'),
+				'markup' => $statistics
+			)),
 			 self::template('wp-admin/settings_form/radio', array(
 				'options' => $servers,
 				'key' => 'spam_hammer_server',
@@ -466,17 +408,6 @@ class SpamHammer {
 			)),
 			self::template('wp-admin/settings_form/radio', array(
 				'options' => array(
-					array('label' => __('Yes', 'spam-hammer'), 'value' => true),
-					array('label' => __('No', 'spam-hammer'), 'value' => false)
-				),
-
-				'key' => 'spam_hammer_uncloak_website_url',
-				'name' => __('Uncloak Website Urls', 'spam-hammer'),
-				'value' => get_option('spam_hammer_uncloak_website_url'),
-				'description' => __('Get and display the final destinations of website urls sent in the comment form.', 'spam-hammer')
-			)),
-			self::template('wp-admin/settings_form/radio', array(
-				'options' => array(
 					array('label' => __('MODERATE', 'spam-hammer'), 'value' => true),
 					array('label' => __('DROP', 'spam-hammer'), 'value' => false)
 				),
@@ -485,11 +416,6 @@ class SpamHammer {
 				'name' => __('Default Policy', 'spam-hammer'),
 				'value' => get_option('spam_hammer_default_policy'),
 				'description' => __('How to treat comments if the Spam Hammer network becomes unreachable.', 'spam-hammer')
-			)),
-			self::template('wp-admin/settings_form/raw', array(
-				'key' => 'spam_hammer_statistics',
-				'name' => __('Connection & Account', 'spam-hammer'),
-				'markup' => $statistics
 			))
 		));
 
@@ -677,6 +603,8 @@ if (!class_exists('SpamHammer_Network')) {
 				$params['method'] = 'GET';
 			}
 
+			$params['method'] = strtoupper($params['method']);
+
 			if ($params['method'] == 'GET' && !empty($params['content'])) {
 				$params['url'] = implode('?', array($params['url'], http_build_query($params['content'])));
 			}
@@ -694,7 +622,7 @@ if (!class_exists('SpamHammer_Network')) {
 					curl_setopt_array($resource, $params['curl_setopt_array']);
 				}
 
-				if ($params['method'] == 'POST') {
+				if ($params['method'] == "POST") {
 					$params['headers'][] = sprintf('Content-Length: %d', strlen(http_build_query($params['content'])));
 
 					curl_setopt($resource, CURLOPT_POST, true);
