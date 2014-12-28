@@ -2,7 +2,7 @@
 Contributors: wpspamhammer
 Tags: post, plugin, admin, posts, comments, page, premium, spam blocker, serviceware
 Requires at least: 3.0.0
-Stable tag: 3.9.8.2
+Stable tag: 3.9.8.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,6 +145,12 @@ The testimonials are there because this is a professional service. I’m extendi
 3. Activate the plugin through the Admin Controls under `Plugins` > `Installed Plugins`.
 
 == Changelog ==
+
+= 3.9.8.3 =
+
+* Added SSL encryption and certificate to plugin.
+* Comment data is now used for filtering instead of commenter metadata alone.
+* Major underhaul on the cloud/backend adding 3 additional layers of protection.
 
 = 3.9.8.2 =
 

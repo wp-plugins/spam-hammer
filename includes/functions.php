@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "3.9.8.2";
+	const VERSION = "3.9.8.3";
 
 	static $servers = array(
 		'production' => array(
@@ -184,7 +184,7 @@ class SpamHammer {
 		endif;
 
 		if (!get_option("spam_hammer_auth_token")):
-			SpamHammer_Network::get("spamhammer", "get");
+			SpamHammer_Network::get("subscriptions", "settings");
 
 			global $wpdb;
 
@@ -240,7 +240,7 @@ class SpamHammer {
 	}
 
 	public static function updateOptions() {
-		SpamHammer_Network::get('spamhammer', 'set', array('remote-settings' => $_POST['remote-settings']));
+		SpamHammer_Network::get("subscriptions", "settings", array('remote-settings' => $_POST['remote-settings']));
 	}
 
 	static function pre_comment_approved($approved, &$comment_data = null) {
@@ -252,14 +252,14 @@ class SpamHammer {
 			if (!get_option("spam_hammer_nuke_comments")):
 				$approved = 'spam';
 			else:
-				wp_die(__("There is suspicious activity on your network and registration can only continue with the webmaster's assistance -- contact him or her immediately.", 'spam-hammer'));
+				wp_die(__("There is suspicious activity on your network and commenting can only complete with the webmaster's assistance -- contact him or her immediately.", 'spam-hammer'));
 			endif;
 		}
 
 		return $approved;
 	}
 
-	static function registration_errors($errors, $sanitized_user_login = '', $user_email = '') {
+	static function registration_errors($errors, $sanitized_user_login = "", $user_email = "") {
 		if (!$errors->errors && !self::process_form(array('type' => 'register'))) {
 			wp_die(__("There is suspicious activity on your network and registration can only continue with the webmaster's assistance -- contact him or her immediately.", 'spam-hammer'));
 		}
@@ -268,14 +268,14 @@ class SpamHammer {
 	}
 
 	static function wpcf7_spam($spam) {
-		if ($spam) {
+		if ($spam):
 			return $spam;
-		}
+		endif;
 
 		return !self::process_form(array(
-			'type' => 'contact',
-			'user_name' => isset($_POST['your-name']) ? $_POST['your-name'] : '',
-			'email_address' => isset($_POST['your-email']) ? $_POST['your-email'] : ''
+			'type' => "contact",
+			'user_name' => isset($_POST['your-name']) ? $_POST['your-name'] : "",
+			'email_address' => isset($_POST['your-email']) ? $_POST['your-email'] : ""
 		));
 	}
 
@@ -286,20 +286,21 @@ class SpamHammer {
 			'honeypots' => array(
 				'website_url' => array(
 					'snare' => get_option("spam_hammer_honeypot_website_url"),
-					'input' => $_POST['url']
+					'input' => isset($_POST['url']) ? $_POST['url'] : ""
 				)
 			),
 			'user_name' => isset($_POST['author']) ? $_POST['author'] : '',
 			'email_address' => isset($_POST['email']) ? $_POST['email'] : '',
+			'full_text' => isset($_POST['comment']) ? $_POST['comment'] : '',
 			'user_agent' => (isset($_SERVER['HTTP_USER_AGENT']) && !empty($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : ''
 		);
 
 		$params += $defaults;
-		$process = SpamHammer_Network::get('spamhammer', 'process_form', $params);
+		$process = SpamHammer_Network::get("commands", "processForm", $params);
 
-		if (!$process || is_array($process)) {
+		if (!$process || is_array($process)):
 			return false;
-		}
+		endif;
 
 		return true;
 	}
@@ -309,14 +310,16 @@ class SpamHammer {
 	}
 
 	static function comment_form($post_id) {
-		echo self::render_form(array('type' => 'comment'));
+		echo self::render_form(array('type' => "comment"));
 	}
 
 	static function register_form() {
-		echo self::render_form(array('type' => 'register'));
+		echo self::render_form(array('type' => "register"));
 	}
 
 	static function render_form($params = array()) {
+		wp_enqueue_script("jquery");
+
 		$defaults = array(
 			'template' => 'input',
 			'type' => 'comment',
@@ -326,7 +329,7 @@ class SpamHammer {
 
 		$params += $defaults;
 
-		if (!($markup = SpamHammer_Network::get('spamhammer', 'render_form', $params)) || is_array($markup)):
+		if (!($markup = SpamHammer_Network::get("commands", "renderForm", $params)) || is_array($markup)):
 			return '';
 		endif;
 
@@ -340,7 +343,7 @@ class SpamHammer {
 	}
 
 	static function admin_options_page() {
-		if (!($response = SpamHammer_Network::get('spamhammer', 'get')) || is_array($response)) {
+		if (!($response = SpamHammer_Network::get("subscriptions", "settings")) || is_array($response)) {
 			if (!is_array($response)) {
 				$statistics = sprintf('<h1 style="color: red; margin: 0;">%1$s*</h1>', __('Protection Inactive', 'spam-hammer')) .
 					sprintf('<dfn>* %1$s</dfn>', __('Critical Error #0: Contact Support', 'spam-hammer'));
@@ -494,21 +497,20 @@ if (!class_exists('SpamHammer_Network')) {
 			return isset(self::$functions[$key]) ? self::$functions[$key] : false;
 		}
 
-		public static function get($product, $hook, $params = array()) {
+		public static function get($controller, $action, $params = array()) {
 			$server = get_option("spam_hammer_server");
 
 			$params += array(
-				'url' => get_bloginfo('url'),
+				'url' => get_bloginfo("url"),
 				'time' => time(),
-				'blog_version' => get_bloginfo('version'),
-				'auth_token' => get_option('spam_hammer_auth_token'),
-				'10_day' => !get_option('spam_hammer_auth_token'),
+				'blog_version' => get_bloginfo("version"),
+				'auth_token' => get_option("spam_hammer_auth_token"),
 				'plugin_version' => SpamHammer::VERSION,
-				'member' => is_user_logged_in(),
+				'member_id' => get_current_user_id(),
 				'session_hash' => md5(LOGGED_IN_SALT . md5(SpamHammer::getRemoteAddr()))
 			);
 
-			if (ini_get('allow_url_fopen')) {
+			if (ini_get("allow_url_fopen")) {
 				$opts = array('http' => array(
 					'method' => 'POST',
 					'timeout' => 30,
@@ -520,18 +522,34 @@ if (!class_exists('SpamHammer_Network')) {
 					'content' => http_build_query($params)
 				));
 
-				if (($response = @json_decode(@file_get_contents("http://{$server}/plugins/{$product}/{$hook}", false, stream_context_create($opts)), true)) === null) {
+				foreach (SpamHammer::$servers as $environment => $details):
+					if ($environment == "testing" && $server == $details['value']):
+						$opts['ssl'] = array('allow_self_signed' => true);
+					endif;
+				endforeach;
+
+				if (($response = @json_decode(@file_get_contents("https://{$server}/{$controller}/{$action}", false, stream_context_create($opts)), true)) === null) {
 					return false;
 				}
-			} else if (function_exists('curl_init') && ($ch = curl_init()) != false) {
+			} else if (function_exists("curl_init") && ($ch = curl_init()) != false) {
+				$certificate = "production";
+
+				foreach (SpamHammer::$servers as $environment => $details):
+					if ($server == $details['value']):
+						$certificate = $environment;
+					endif;
+				endforeach;
+
 				curl_setopt_array($ch, array(
-					CURLOPT_URL => "http://{$server}/plugins/{$product}/{$hook}",
+					CURLOPT_URL => "https://{$server}/{$controller}/{$action}",
+					CURLOPT_CAINFO => SPAM_HAMMER_DIR . "/security/{$certificate}.crt",
+					CURLOPT_SSL_VERIFYHOST => 2,
 					CURLOPT_POST => true,
 					CURLOPT_POSTFIELDS => http_build_query($params),
 					CURLOPT_HTTPHEADER => array(
-						sprintf('Accept: %1$s', 'application/json'),
-						sprintf('Accept-Language: %1$s', !WPLANG ? 'en_US' : WPLANG),
-						sprintf('Accept-Charset: %1$s', get_bloginfo('charset'))
+						sprintf('Accept: %1$s', "application/json"),
+						sprintf('Accept-Language: %1$s', !WPLANG ? "en_US" : WPLANG),
+						sprintf('Accept-Charset: %1$s', get_bloginfo("charset"))
 					),
 					CURLOPT_RETURNTRANSFER => true
 				));
@@ -673,7 +691,7 @@ class SpamHammer_Proxy {
 			$server = get_option("spam_hammer_server");
 			$auth_token = get_option("spam_hammer_auth_token");
 
-			if (!($response = @json_decode(@SpamHammer_Network::wget(array('url' => "http://{$server}/cache/subscriptions/{$auth_token}/statistics.ytd.json"), true))) || !is_array($response) || empty($response)) {
+			if (!($response = @json_decode(@SpamHammer_Network::wget(array('url' => "https://{$server}/cache/subscriptions/{$auth_token}/statistics.ytd.json"), true))) || !is_array($response) || empty($response)) {
 				return false;
 			}
 

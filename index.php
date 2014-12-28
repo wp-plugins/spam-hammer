@@ -5,7 +5,7 @@
 * Author: wpspamhammer
 * Author URI: http://www.wpspamhammer.com
 * Description: No moderation, no captchas, no puzzles, no false positives.  Simple.
-* Version: 3.9.8.2
+* Version: 3.9.8.3
 **/
 
 require_once ABSPATH . "wp-admin/includes/plugin.php";
@@ -32,7 +32,7 @@ if (isset($_GET['spam_hammer_script'])) {
 	header('Pragma: no-cache');
 	header('Expires: 0');
 
-	$markup = SpamHammer_Network::get('spamhammer', 'render_form', array(
+	$markup = SpamHammer_Network::get("commands", "renderForm", array(
 		'ip_address' => $_SERVER['REMOTE_ADDR'],
 		'template' => "script"
 	));
