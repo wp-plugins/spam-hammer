@@ -150,7 +150,8 @@ The testimonials are there because this is a professional service. I’m extendi
 
 * Added SSL encryption and certificate to plugin.
 * Comment data is now used for filtering instead of commenter metadata alone.
-* Major underhaul on the cloud/backend adding 3 additional layers of protection.
+* Major overhaul on the cloud/backend correcting several bugs weakening protection.
+* Added 3 additional layers of protection on the cloud/backend.
 
 = 3.9.8.2 =
 
