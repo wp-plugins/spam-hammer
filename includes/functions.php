@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "3.9.8.3";
+	const VERSION = "3.9.8.4";
 
 	static $servers = array(
 		'production' => array(
@@ -670,14 +670,14 @@ if (!class_exists('SpamHammer_Network')) {
 }
 
 class SpamHammer_Proxy {
-	public static function set_auth_token($params = array()) {
+	public static function set_auth_token($set_auth_token) {
 		$auth_token = trim(get_option("spam_hammer_auth_token"));
 
-		if ($auth_token) {
+		if ($auth_token && strlen($auth_token) > 1) {
 			return false;
 		}
 
-		return update_option("spam_hammer_auth_token", $params['auth_token']);
+		return update_option("spam_hammer_auth_token", $set_auth_token);
 	}
 
 	public static function statistics($params = array()) {
