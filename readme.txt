@@ -146,6 +146,10 @@ The testimonials are there because this is a professional service. I’m extendi
 
 == Changelog ==
 
+= 3.9.8.5 =
+
+* Fix to the "Critical Error #0" bug triggered by SSL with cURL.
+
 = 3.9.8.4 =
 
 * Fix to a critical authentication token bug "single character" preventing the chart and counter from working.
