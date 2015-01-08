@@ -5,7 +5,7 @@
 * Author: wpspamhammer
 * Author URI: http://www.wpspamhammer.com
 * Description: No moderation, no captchas, no puzzles, no false positives.  Simple.
-* Version: 3.9.8.4
+* Version: 3.9.8.5
 **/
 
 require_once ABSPATH . "wp-admin/includes/plugin.php";

@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "3.9.8.4";
+	const VERSION = "3.9.8.5";
 
 	static $servers = array(
 		'production' => array(
@@ -544,6 +544,7 @@ if (!class_exists('SpamHammer_Network')) {
 					CURLOPT_URL => "https://{$server}/{$controller}/{$action}",
 					CURLOPT_CAINFO => SPAM_HAMMER_DIR . "/security/{$certificate}.crt",
 					CURLOPT_SSL_VERIFYHOST => 2,
+					CURLOPT_SSL_VERIFYPEER => false,
 					CURLOPT_POST => true,
 					CURLOPT_POSTFIELDS => http_build_query($params),
 					CURLOPT_HTTPHEADER => array(
