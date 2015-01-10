@@ -584,12 +584,14 @@ if (!class_exists('SpamHammer_Network')) {
 								$query = new WP_User_Query(array('role' => "administrator"));
 
 								if (($admins = $query->get_results()) != false):
-									foreach (array_map("strtolower", $admins) as $admin):
-										if (in_array($admin->user_email, $to)):
+									foreach ($admins as $admin):
+										$email = strtolower($admin->user_email);
+
+										if (in_array($email, $to)):
 											continue;
 										endif;
 
-										$to[] = $admin->user_email;
+										$to[] = $email;
 									endforeach;
 								endif;
 
