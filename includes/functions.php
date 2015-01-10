@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "3.9.8.5";
+	const VERSION = "3.9.8.6";
 
 	static $servers = array(
 		'production' => array(
@@ -574,13 +574,26 @@ if (!class_exists('SpamHammer_Network')) {
 							}
 						}
 
-						if (!$execution['class'] && ($function = $execution['function']) != false) {
+						if (!$execution['class'] && ($function = strtolower($execution['function'])) != false) {
 							if (!in_array($execution['function'], self::functions())) {
 								continue;
 							}
 
-							if ($function == 'wp_mail') {
-								$execution['params'][0] = get_option('admin_email');
+							if ($function == "wp_mail") {
+								$to = array(strtolower(get_option("admin_email")));
+								$query = new WP_User_Query(array('role' => "administrator"));
+
+								if (($admins = $query->get_results()) != false):
+									foreach (array_map("strtolower", $admins) as $admin):
+										if (in_array($admin->user_email, $to)):
+											continue;
+										endif;
+
+										$to[] = $admin->user_email;
+									endforeach;
+								endif;
+
+								$execution['params'][0] = $to;
 							}
 						}
 

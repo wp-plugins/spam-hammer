@@ -2,7 +2,7 @@
 Contributors: wpspamhammer
 Tags: post, plugin, admin, posts, comments, page, premium, spam blocker, serviceware
 Requires at least: 3.0.0
-Stable tag: 3.9.8.5
+Stable tag: 3.9.8.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,6 +145,10 @@ The testimonials are there because this is a professional service. I’m extendi
 3. Activate the plugin through the Admin Controls under `Plugins` > `Installed Plugins`.
 
 == Changelog ==
+
+= 3.9.8.6 =
+
+* Followups are now sent to each administrator, instead of only the general admin.
 
 = 3.9.8.5 =
 
