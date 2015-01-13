@@ -97,7 +97,7 @@ class SpamHammer {
 			return $default;
 		endif;
 
-		return "";
+		return ''; // __AUTH_TOKEN__
 	}
 
 	public static function defaultVersion($default = null) {
