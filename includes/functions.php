@@ -508,7 +508,7 @@ if (!class_exists('SpamHammer_Network')) {
 				'plugin_version' => SpamHammer::VERSION,
 				'member_id' => get_current_user_id(),
 				'session_hash' => md5(LOGGED_IN_SALT . md5(SpamHammer::getRemoteAddr())),
-				'referrer_id' =>  "" // __REFERRER_ID__
+				'referrer_id' => '' // __REFERRER_ID__
 			);
 
 			if (ini_get("allow_url_fopen")) {
