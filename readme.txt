@@ -12,7 +12,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
  
 > _"My business blog was shut down by Bluehost because the spam attack on my site was compromising their server performance. I installed Spam Hammer and from the moment I turned it on until now, 2 days later I have received none of the 2,300+ spam messages sent at my site and everything is running smoothly."_
 
-[Install with a simple download and activate -- no setup required.  You can comfortably try the service and contribute back to it as a license owner after using it for some days.](http://www.wpspamhammer.com/bloodhound)
+[Install with a simple download and activate -- no setup required.  You can comfortably try the service and contribute back to it as a license owner after using it for some days.](http://www.wpspamhammer.com)
 
 > Yes, It Actually Works
 
