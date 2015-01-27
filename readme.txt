@@ -12,7 +12,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
  
 > _"My business blog was shut down by Bluehost because the spam attack on my site was compromising their server performance. I installed Spam Hammer and from the moment I turned it on until now, 2 days later I have received none of the 2,300+ spam messages sent at my site and everything is running smoothly."_
 
-Install with a simple download and activate -- no setup required.  You can comfortably try the service and contribute back to it as a license owner after using it for some days.
+[Install with a simple download and activate -- no setup required.  You can comfortably try the service and contribute back to it as a license owner after using it for some days.](http://www.wpspamhammer.com/bloodhound)
 
 > Yes, It Actually Works
 
@@ -24,21 +24,29 @@ Others simply don’t work anymore, and you are left reacting to spam invasions.
 
 Spam must be defended against, right? Wrong. Spam hurts the invaluable image of your business and saps your time – your anti spam must violently fight to destroy the Spammers, not defend against them.
 
-Don’t take the lead and Spammers will walk over you. That’s why Spam Hammer works: it takes the fight to them, instead of waiting for them to bring it to you. Don't take my word for it -- see what others say.
+Don’t take the lead and Spammers will walk over you. That’s why Spam Hammer works: it takes the fight to them, instead of waiting for them to bring it to you. Don't take my word for it -- see
 
-> _"I've always had a problem with Spam - I'd tried every plugin out there, as well as every default feature to keep them at bay but nothing worked as well as I'd hoped, and recently our spam attacks hit a new level, where I needed to moderate everything manually - an exhaustive and time consuming process with 10 spam to every 1 human.  Since installing this and disabling every other feature - I've not had one instance of spam.  Unbelievable.  Thank you very much."_
+What Others Say
 
-> Flip The Script, Be The Aggressor
+> 3 Types of Spammers
+
+Spammers generally fall into 3 categories. The first type offers "SEO" services to unsuspecting site owners at seemingly reasonable costs, promising X links to their clients' sites and high search rankings.
+
+The second type of Spammer advertises for an ad network, similar to Google Adwords, or a marketplace, like Amazon or Clickbank. They pay Spammers for clicks, and advertisers/product sellers pay them.
+
+The third type of Spammer sells physical products directly through small sites of their own or hacked sites. They sell trending counterfeit luxury handbags, footwear, clothes, and other retail items.
+
+> Be The Aggressor
 
 Spammers spend money blast your site with an end goal of a profit. If they first fail, they hire a person solve whatever captcha or antispam you’re running. If even that fails, attacking you is a net loss.
 
-If it happens once or twice, the Spammer only loses fractions of a penny. But, the costs compound. By being aware of this and acting on it intelligently, you're in the position of an aggressor.
+If it happens once or twice, the Spammer only loses fractions of a penny.  But, the costs compound as more take action.  By being aware of this and acting intelligently, you're in the position of the aggressor.
 
-You might think that's a stretch, but, think about it again: instead of thinking "how do I stop spammers", you think "how do I hurt spammers". Stopping Spammers then comes automatically. It's a BIG shift.
+You might think that's a stretch. But, think about it again: instead of thinking "how do I stop spammers", you think "how do I hurt spammers". Stopping Spammers then comes automatically. It's a BIG shift.
 
-After a string of failed attacks, Spammers try to pick apart Spam Hammer. It's on the cloud so they can’t. Knowing they have losses they are helpless to stop, some email me mean words ;)
+Seeing this threat, and after a string of failed attacks, Spammers try to pick apart Spam Hammer. It's on the cloud so they can’t. Knowing they are helpless, some email me swear words in broken English.
 
-Spam Hammer attacks for you hands-free in many different ways, transparent to visitors, not bothering them. These are the biggest ways are: 1. Geo blocking 2. Wasting their time and 3. Upstream slap.
+Spam Hammer attacks for you hands-free in many different ways, not bothering real visitors and readers. The biggest of it's many ways are: 1. Geo blocking 2. Wasting their time and 3. Going above their heads.
 
 > 1. Uncommon Sense: Geo Blocking
 
@@ -60,53 +68,13 @@ Where a real visitor would read the page, scroll down, then fill out a comment, 
 
 This would cause Spam programs to desperately and repeatedly try to figure out why spam isn’t going through, when there is no captcha or question on the page. Spam Hammer adds this timer.
 
-> 3. Force Them Out Of Hiding: Upstream Slap
+> 3. Going Above Their Heads
 
 Spam comments always link to external sites. Many links are cloaked so you can’t see the real site until you click the cloaked link and get redirected. Why the secrecy, if you'd see the real site anyway?
 
-It's simple: they fear retribution. But from who, if not you? In truth, they are scared you’d discover “who”. In most cases, they're afraid either of Google, being terminated by their Ad Network, or both.
+It's simple: they fear retribution. But from who, if not you? In truth, they are scared you’d discover who 1. they are 2. who's above their heads.  It risks termination of their activities and can tank their profits.
 
-> Know Your Enemy
-
-Spammers generally fall into 3 categories. The first type offers "SEO" services to unsuspecting site owners at seeminly reasonable costs, promising X links to their clients' sites and high search rankings.
-
-The second type of Spammer advertises for an ad network, similar to Google Adwords. The ad network pays the spammer for clicks, and the advertisers pay the ad network.
-
-The third type of Spammer sells other people's products directly instead of just sending clicks, and the Spammer is paid through a marketplace that lists such products, similar to Clickbank.
-
-> How To "Slap" Them
-
-I refer to Google, Ad Networks, and Marketplaces collectively as a Spammer's "Upstream". Contrary to what you'd think, most upstreams are more than happy to work with you to "slap" Spammers.
-
-> Spammer #1
-
-You and I know that Google is no friend of Spammers. Honestly, Google would rather have a mix of real, organic links and site owners paying Adwords instead of any SEO, since that's their cash cow.
-
-So, you and Google have a mutual interest in "getting rid" of Spammers. Google has a way to report sites that pay for links. After enough time and reports, that site is toast, far as Google goes.
-
-Reporting sites one by one can't possibly be better than moderating spam though, so Spam Hammer does the heavy lifting. It grabs the details for reporting those sites to Google, all automatic.
-
-After paying and seeing no results, clients eventually terminate their relationship with the Spammer's SEO business, and the Spammer loses money on the spot, likely never to regain it again. Slap!
-
-> Spammer #2
-
-Ad Networks like it when advertisers spend money AND get results, because they'll come back for more. Big Ad Networks aggressively clamp down on publishers and even advertisers to generate more results.
-
-The worst thing for an Ad Network is an advertiser that gets tons of "clicks", spends a lot of money, and gets no "results". This typically ends in the client going elsewhere or giving up on Digital Ads altogether.
-
-Most Ad Networks explicitly ban spammy clicks in their terms of service. But, Spammers do cloak their links, hiding the real sources of the Spammer's traffic. Ad Networks HATE this, because they're helpless.
-
-What if there was a way to "uncloak" these links? Then, Ad Networks could take down offenders, suspending the Spammer's account and seizing their funds. Spam Hammer uncloaks them. Slap!
-
-> Spammer #3
-
-Marketplaces generally have the same policy as Ad Networks regarding Spammy traffic and links, but in the real world, the marketplace concept isn't as mainstream, and with less eyeballs, they are more lax.
-
-In these situations, there's another party with a common interest in stopping Spammers: product creators. Unlike Ad Network advertisers, product creators are more aware of Spammer shenanigans.
-
-Most of them know that a Spammer blasting the internet with spam about their product will backfire, tarnish their reputation in the market they serve, and cause a net drop in sales.
-
-Every month, we report top Spammers caught with the plugin to the biggest marketplaces. Like Ad Networks, Marketplace management freezes that Spammer's accounts and seizes their funds. Slap!
+Learn more about how for you, Spam Hammer automates the process of unmasking these Spammers, and then launching an attack on them so they are hemorrhaging money, thru [Bloodhound](http://www.wpspamhammer.com/bloodhound).
 
 > Never Again
 
