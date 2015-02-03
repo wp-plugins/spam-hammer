@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "3.9.8.6";
+	const VERSION = "3.9.8.7";
 
 	static $servers = array(
 		'production' => array(
@@ -188,7 +188,7 @@ class SpamHammer {
 
 			global $wpdb;
 
-			$wpdb->query("UPDATE wp_posts SET ping_status='closed' WHERE post_type IN ('post', 'page')");
+			$wpdb->query("UPDATE wp_posts SET ping_status = 'closed' WHERE post_type IN ('post', 'page')");
 		endif;
 
 		if (!($statistics = get_option("spam_hammer_statistics")) || !$statistics['pull'] || $statistics['pull'] <= strtotime("-1 hour")):
@@ -199,26 +199,36 @@ class SpamHammer {
 	public static function admin_head() {
 		global $current_screen;
 
-		if (!isset($current_screen) || !$current_screen || $current_screen->id != "dashboard") {
-			return;
-		}
-
-		$tags = array(
-			array(
-				'html' => '<script src="//www.google.com/jsapi"></script>',
-				'data' => array()
-			),
-			array(
-				'html' => '<script src="//%1$s/js/remote-stats.js" id="SpamHammerRemoteStats" data-spam-hammer-server="%1$s" data-spam-hammer-auth-token="%2$s" data-spam-hammer-timezone-string="%3$s" data-spam-hammer-platform="%4$s" data-spam-hammer-admin="%5$s"></script>',
-				'data' => array(get_option('spam_hammer_server'), get_option('spam_hammer_auth_token'), get_option('timezone_string'), 'wordpress', get_option('admin_email'))
-			)
+		$data = array(
+			get_option("spam_hammer_server"),
+			get_option("spam_hammer_auth_token"),
+			get_option("timezone_string"),
+			"wordpress",
+			get_option("admin_email")
 		);
 
 		wp_enqueue_script("jquery");
 
-		foreach ($tags as $tag) {
+		$tags = array(
+			compact("data") + array(
+				'html' => '<script src="//%1$s/js/remote/wp_admin_head.js" id="spam-hammer-wp-admin-head" data-spam-hammer-server="%1$s" data-spam-hammer-auth-token="%2$s"></script>'
+			)
+		);
+
+		if (isset($current_screen) && !empty($current_screen) && $current_screen->id == "dashboard"):
+			$tags[] = array(
+				'html' => '<script src="//www.google.com/jsapi"></script>',
+				'data' => array()
+			);
+
+			$tags[] = compact("data") + array(
+				'html' => '<script src="//%1$s/js/remote/stats.js" id="spam-hammer-remote-stats" data-spam-hammer-server="%1$s" data-spam-hammer-auth-token="%2$s" data-spam-hammer-timezone-string="%3$s" data-spam-hammer-platform="%4$s" data-spam-hammer-admin="%5$s"></script>'
+			);
+		endif;
+
+		foreach ($tags as $tag):
 			vprintf($tag['html'], $tag['data']);
-		}
+		endforeach;
 	}
 
 	public static function wp_dashboard_setup() {
