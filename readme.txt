@@ -6,7 +6,7 @@ Stable tag: 3.9.8.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-"My business blog was shut down by Bluehost because the spam attack on my site was..." Blocks/Total Spam Attacks: 15,810,433
+"My business blog was shut down by Bluehost because the spam attack on my site was..." Blocks/Total Spam Attacks: 15,810,928
 
 == Description ==
  
