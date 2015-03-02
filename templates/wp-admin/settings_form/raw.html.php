@@ -3,9 +3,9 @@
 		<label for="<?php echo $key; ?>"><?php echo $name; ?></label>
 	</th>
 	<td>
-		<?php echo $markup; ?>
+		<?php echo isset($markup) ? $markup : ""; ?>
 
-		<?php if (isset($description) && !empty($description)): ?>
+		<?php if (isset($description)): ?>
 			<p class="description"><?php echo $description; ?></p>
 		<?php endif; ?>
 	</td>

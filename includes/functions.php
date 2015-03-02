@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "3.9.8.7";
+	const VERSION = "4.0";
 
 	static $servers = array(
 		'production' => array(
@@ -18,58 +18,41 @@ class SpamHammer {
 		"server",
 		"auth_token",
 		"version",
-		"honeypot_website_url",
 		"nuke_comments",
+		"retroactive_ping_status",
 		"default_policy",
-		"statistics",
-		"retroactive_ping_status"
+		"selectors"
 	);
 
-	public static function defaultFilters() {
-		# register_activation_hook(SPAM_HAMMER_DIR . '/index.php', array(__CLASS__, 'register_activation_hook'));
-		# register_deactivation_hook(SPAM_HAMMER_DIR . '/index.php', array(__CLASS__, 'register_deactivation_hook'));
+	static $process_form = null;
 
+	static function default_filters() {
 		load_plugin_textdomain('spam-hammer', false, 'spam-hammer/languages');
 
-		if (!current_user_can('administrator')) {
-			# Process Form
-
+		if (!current_user_can("administrator")) {
+			add_filter("init", array(__CLASS__, "init"));
+			add_filter("wp_head", array(__CLASS__, "wp_head"));
 			add_filter('pre_comment_approved', array(__CLASS__, 'pre_comment_approved'));
-			add_filter('registration_errors', array(__CLASS__, 'registration_errors'));
+			add_filter("wp_footer", array(__CLASS__, "wp_footer"));
+		} else {
+			add_action('admin_init', array(__CLASS__, 'admin_init'));
+			add_action('admin_head', array(__CLASS__, 'admin_head'));
+			add_action('admin_menu', array(__CLASS__, 'admin_menu'));
 
-			if (has_filter('wpcf7_spam')):
-				add_filter('wpcf7_spam', array(__CLASS__, 'wpcf7_spam'));
-			endif;
-
-			# Render Form
-
-			add_filter('comment_form', array(__CLASS__, 'comment_form'));
-			add_action('comment_form_default_fields', array(__CLASS__, 'comment_form_default_fields'));
-			add_filter('register_form', array(__CLASS__, 'register_form'));
-
-			if (has_filter('wpcf7_form_elements')):
-				add_filter('wpcf7_form_elements', array(__CLASS__, 'wpcf7_form_elements'));
-			endif;
+			if (pathinfo($_SERVER['SCRIPT_FILENAME'], PATHINFO_BASENAME) == "options.php" && $_POST['action'] == "update" && $_POST['option_page'] == "spam_hammer") {
+				self::update_remote_settings();
+			}
 		}
-
-		add_action('admin_menu', array(__CLASS__, 'admin_menu'));
-		add_action('admin_head', array(__CLASS__, 'admin_head'));
-
-		add_action('wp_dashboard_setup', array(__CLASS__, 'wp_dashboard_setup'));
-		add_action('widgets_init', array(__CLASS__, 'widgets_init'));
 	}
 
-	public static function defaultOptions() {
-		add_filter("default_option_spam_hammer_server", array(__CLASS__, "defaultServer"));
-		add_filter("default_option_spam_hammer_auth_token", array(__CLASS__, "defaultAuthToken"));
-		add_filter("default_option_spam_hammer_version", array(__CLASS__, "defaultVersion"));
-
-		add_filter("default_option_spam_hammer_honeypot_website_url", array(__CLASS__, "defaultOptionTrue"));
-		add_filter("default_option_spam_hammer_nuke_comments", array(__CLASS__, "defaultOptionTrue"));
-
-		add_filter("default_option_spam_hammer_default_policy", array(__CLASS__, "defaultOptionFalse"));
-		add_filter("default_option_spam_hammer_statistics", array(__CLASS__, "defaultOptionStatistics"));
-		add_filter("default_option_spam_hammer_retroactive_ping_status", array(__CLASS__, "defaultOptionFalse"));
+	static function default_options() {
+		add_filter("default_option_spam_hammer_server", array(__CLASS__, "default_server"));
+		add_filter("default_option_spam_hammer_auth_token", array(__CLASS__, "default_auth_token"));
+		add_filter("default_option_spam_hammer_version", array(__CLASS__, "default_version"));
+		add_filter("default_option_spam_hammer_selectors", array(__CLASS__, "default_selectors"));
+		add_filter("default_option_spam_hammer_nuke_comments", array(__CLASS__, "default_option_true"));
+		add_filter("default_option_spam_hammer_default_policy", array(__CLASS__, "default_option_false"));
+		add_filter("default_option_spam_hammer_retroactive_ping_status", array(__CLASS__, "default_option_false"));
 
 		if (current_user_can("administrator")):
 			foreach (self::$options as $option):
@@ -84,7 +67,7 @@ class SpamHammer {
 		endif;
 	}
 
-	public static function defaultServer($default = null) {
+	static function default_server($default = null) {
 		if ($default):
 			return $default;
 		endif;
@@ -92,7 +75,7 @@ class SpamHammer {
 		return self::$servers['production']['value'];
 	}
 
-	public static function defaultAuthToken($default = null) {
+	static function default_auth_token($default = null) {
 		if ($default):
 			return $default;
 		endif;
@@ -100,7 +83,7 @@ class SpamHammer {
 		return ''; // __AUTH_TOKEN__
 	}
 
-	public static function defaultVersion($default = null) {
+	static function default_version($default = null) {
 		if ($default):
 			return $default;
 		endif;
@@ -108,15 +91,15 @@ class SpamHammer {
 		return self::VERSION;
 	}
 
-	public static function defaultOptionStatistics($default = null) {
+	static function default_selectors($default = null) {
 		if ($default):
 			return $default;
 		endif;
 
-		return SpamHammer_Proxy::statistics(array('action' => "set"));
+		return self::selectors();
 	}
 
-	public static function defaultOptionTrue($default = null) {
+	static function default_option_true($default = null) {
 		if ($default):
 			return $default;
 		endif;
@@ -124,7 +107,7 @@ class SpamHammer {
 		return true;
 	}
 
-	public static function defaultOptionFalse($default = null) {
+	static function default_option_false($default = null) {
 		if ($default):
 			return $default;
 		endif;
@@ -132,41 +115,68 @@ class SpamHammer {
 		return false;
 	}
 
-	public static function comment_form_default_fields($fields) {
-		if (isset($fields['url']) && get_option("spam_hammer_honeypot_website_url")):
-			unset($fields['url']);
+	static function init() {
+		if (strcasecmp($_SERVER['REQUEST_METHOD'], "POST") !== 0):
+			return true;
 		endif;
 
-		return $fields;
-	}
+		$selectors = get_option("spam_hammer_selectors");
 
-	public static function getRemoteAddr($src_ip = null) {
-		if (!$src_ip):
-			$src_ip = $_SERVER["REMOTE_ADDR"];
+		if (!($definitions = preg_split("/\s*,\s*/", $selectors['scripts']))):
+			return true;
 		endif;
 
-		if (filter_var($src_ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)):
-			return $src_ip;
-		endif;
+		$sources = array(
+			"request" => $_REQUEST,
+			"post" => $_POST,
+			"get" => $_GET
+		);
 
-		$dst_ip = '';
+		foreach ($definitions as $definition):
+			@list($script, $params) = explode(" ", $definition);
 
-		foreach (array("HTTP_X_FORWARDED_FOR", "HTTP_X_REAL_IP", "HTTP_CLIENT_IP", "HTTP_FROM") as $header):
-			if (!$dst_ip && isset($_SERVER[$header]) && !empty($_SERVER[$header]) && preg_match_all('/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/', $_SERVER[$header], $matches)):
-				foreach ($matches[0] as $match):
-					if (filter_var($match, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)):
-						$dst_ip = $match;
-						break;
-					endif;
-				endforeach;
+			if ($script == pathinfo($_SERVER['SCRIPT_FILENAME'], PATHINFO_BASENAME)):
+				if ($params):
+					parse_str($params, $variables);
+
+					foreach ($variables as $key => $value):
+						reset($sources);
+						$source = key($sources);
+						$name = $key;
+
+						if (strpos($key, ":") !== false):
+							@list($source, $name) = explode(":", $key);
+
+							if (!in_array($source, array_keys($sources))):
+								$source = key($sources);
+							endif;
+						endif;
+
+						if (!isset($sources[$source][$name]) || $sources[$source][$name] != $value):
+							continue 2;
+						endif;
+					endforeach;
+				endif;
+
+				return self::$process_form = self::process_form();
 			endif;
 		endforeach;
 
-		return $dst_ip ? $dst_ip : $src_ip;
+		return true;
 	}
 
-	public static function adminInit() {
-		if (($plugins = self::getPlugins()) != false):
+	static function wp_head() {
+		$selectors = get_option("spam_hammer_selectors");
+		printf('<script type="text/javascript">window.$pam_hammer = %1$s;</script>', json_encode(array("Options" => array("Server" => get_option("spam_hammer_server"), "Domain" => parse_url(get_bloginfo("url"), PHP_URL_HOST), "Forms" => $selectors['forms']), "Statuses" => array("New" => 0, "Request" => 1, "Response" => 2))));
+		printf('<script type="text/javascript" async defer src="//%1$s/js/client/request.min.js"></script>', get_option("spam_hammer_server"));
+	}
+
+	static function wp_footer() {
+		printf('<noscript style="position: fixed; bottom: 0; right: 0; font-size: x-small; color: red;">%1$s</noscript>', __('You must enable JavaScript to submit forms on this website.', 'spam-hammer'));
+	}
+
+	static function admin_init() {
+		if (($plugins = self::get_plugins()) != false):
 			foreach (array("spammers-suck") as $plugin):
 				if (in_array($plugin, array_keys($plugins)) && is_plugin_active("{$plugin}/{$plugins[$plugin]['Script']}")):
 					deactivate_plugins("{$plugin}/{$plugins[$plugin]['Script']}");
@@ -187,17 +197,26 @@ class SpamHammer {
 			SpamHammer_Network::get("subscriptions", "settings");
 
 			global $wpdb;
-
 			$wpdb->query("UPDATE wp_posts SET ping_status = 'closed' WHERE post_type IN ('post', 'page')");
 		endif;
 
-		if (!($statistics = get_option("spam_hammer_statistics")) || !$statistics['pull'] || $statistics['pull'] <= strtotime("-1 hour")):
-			return SpamHammer_Proxy::statistics(array('action' => "set"));
+		if (!($selectors = get_option("spam_hammer_selectors")) || !$selectors['pull'] || $selectors['pull'] <= strtotime("-1 hour")):
+			self::selectors();
 		endif;
+
+		return true;
 	}
 
-	public static function admin_head() {
-		global $current_screen;
+	static function selectors() {
+		if (!($selectors = SpamHammer_Network::get("subscriptions", "selectors"))):
+			return false;
+		endif;
+
+		return update_option("spam_hammer_selectors", $selectors);
+	}
+
+	static function admin_head() {
+		$settings = pathinfo($_SERVER['SCRIPT_FILENAME'], PATHINFO_BASENAME) == "admin.php" && $_GET['page'] == "spam_hammer";
 
 		$data = array(
 			get_option("spam_hammer_server"),
@@ -210,55 +229,25 @@ class SpamHammer {
 		wp_enqueue_script("jquery");
 
 		$tags = array(
-			compact("data") + array(
-				'html' => '<script src="//%1$s/js/remote/wp_admin_head.js" id="spam-hammer-wp-admin-head" data-spam-hammer-server="%1$s" data-spam-hammer-auth-token="%2$s"></script>'
-			)
+			'<script async defer src="//%1$s/js/admin/head.min.js" id="spam-hammer-wp-admin-head" data-spam-hammer-server="%1$s" data-spam-hammer-auth-token="%2$s"></script>',
+			$settings ? '<script async defer src="//%1$s/js/admin/settings.min.js"></script>' : ""
 		);
 
-		if (isset($current_screen) && !empty($current_screen) && $current_screen->id == "dashboard"):
-			$tags[] = array(
-				'html' => '<script src="//www.google.com/jsapi"></script>',
-				'data' => array()
-			);
-
-			$tags[] = compact("data") + array(
-				'html' => '<script src="//%1$s/js/remote/stats.js" id="spam-hammer-remote-stats" data-spam-hammer-server="%1$s" data-spam-hammer-auth-token="%2$s" data-spam-hammer-timezone-string="%3$s" data-spam-hammer-platform="%4$s" data-spam-hammer-admin="%5$s"></script>'
-			);
-		endif;
-
-		foreach ($tags as $tag):
-			vprintf($tag['html'], $tag['data']);
+		foreach (array_filter($tags) as $tag):
+			vprintf($tag, $data);
 		endforeach;
 	}
 
-	public static function wp_dashboard_setup() {
-		add_meta_box('spam_hammer_counter', __('Right Now', 'spam-hammer'), array(__CLASS__, 'render_counter'), 'dashboard', 'normal', 'high');
-		add_meta_box('spam_hammer_chart', __('Spam Attack Chart', 'spam-hammer'), array(__CLASS__, 'render_chart'), 'dashboard', 'side', 'high');
-	}
-
-	public static function widgets_init() {
-		require_once SPAM_HAMMER_DIR . '/includes/widget.php';
-		register_widget('SpamHammer_Widget');
-	}
-
-	public static function render_counter() {
-		echo self::template('wp-admin/dashboard_widgets/counter', array('description' => __('Total Spam Attacks Against Your Blog', 'spam-hammer')));
-	}
-
-	public static function render_chart() {
-		echo self::template('wp-admin/dashboard_widgets/chart');
-	}
-
-	public static function updateOptions() {
+	static function update_remote_settings() {
 		SpamHammer_Network::get("subscriptions", "settings", array('remote-settings' => $_POST['remote-settings']));
 	}
 
 	static function pre_comment_approved($approved, &$comment_data = null) {
-	    if ($comment_data && $comment_data['comment_author_url']):
-	    	$comment_data['comment_author_url'] = $comment_data['comment_author_url'];
-	    endif;
+		if (self::$process_form === null):
+			return $approved;
+		endif;
 
-		if (!self::process_form(array('type' => 'comment'))) {
+		if (!self::$process_form) {
 			if (!get_option("spam_hammer_nuke_comments")):
 				$approved = 'spam';
 			else:
@@ -269,81 +258,18 @@ class SpamHammer {
 		return $approved;
 	}
 
-	static function registration_errors($errors, $sanitized_user_login = "", $user_email = "") {
-		if (!$errors->errors && !self::process_form(array('type' => 'register'))) {
-			wp_die(__("There is suspicious activity on your network and registration can only continue with the webmaster's assistance -- contact him or her immediately.", 'spam-hammer'));
-		}
-
-		return $errors;
-	}
-
-	static function wpcf7_spam($spam) {
-		if ($spam):
-			return $spam;
-		endif;
-
-		return !self::process_form(array(
-			'type' => "contact",
-			'user_name' => isset($_POST['your-name']) ? $_POST['your-name'] : "",
-			'email_address' => isset($_POST['your-email']) ? $_POST['your-email'] : ""
-		));
-	}
-
 	static function process_form($params = array()) {
 		$defaults = array(
-			'request' => array('spam_hammer' => $_POST['spam_hammer']),
-			'ip_address' => self::getRemoteAddr(),
-			'honeypots' => array(
-				'website_url' => array(
-					'snare' => get_option("spam_hammer_honeypot_website_url"),
-					'input' => isset($_POST['url']) ? $_POST['url'] : ""
-				)
-			),
-			'user_name' => isset($_POST['author']) ? $_POST['author'] : '',
-			'email_address' => isset($_POST['email']) ? $_POST['email'] : '',
-			'full_text' => isset($_POST['comment']) ? $_POST['comment'] : '',
-			'user_agent' => (isset($_SERVER['HTTP_USER_AGENT']) && !empty($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : ''
+			'client_token' => isset($_POST['spam_hammer']['client_token']) ? $_POST['spam_hammer']['client_token'] : ""
 		);
 
 		$params += $defaults;
-		$process = SpamHammer_Network::get("commands", "processForm", $params);
 
-		if (!$process || is_array($process)):
-			return false;
+		if (!$params['client_token'] || !($process = SpamHammer_Network::get("commands", "process_form", $params)) || is_array($process)):
+			wp_die(__('You must enable JavaScript to submit forms on this website.', 'spam-hammer'));
 		endif;
 
 		return true;
-	}
-
-	static function wpcf7_form_elements($form_elements) {
-		return $form_elements . self::render_form(array('type' => 'contact'));
-	}
-
-	static function comment_form($post_id) {
-		echo self::render_form(array('type' => "comment"));
-	}
-
-	static function register_form() {
-		echo self::render_form(array('type' => "register"));
-	}
-
-	static function render_form($params = array()) {
-		wp_enqueue_script("jquery");
-
-		$defaults = array(
-			'template' => 'input',
-			'type' => 'comment',
-			'time' => time(),
-			'ip_address' => self::getRemoteAddr()
-		);
-
-		$params += $defaults;
-
-		if (!($markup = SpamHammer_Network::get("commands", "renderForm", $params)) || is_array($markup)):
-			return '';
-		endif;
-
-		return $markup;
 	}
 
 	static function admin_menu() {
@@ -353,39 +279,31 @@ class SpamHammer {
 	}
 
 	static function admin_options_page() {
-		if (!($response = SpamHammer_Network::get("subscriptions", "settings")) || is_array($response)) {
-			if (!is_array($response)) {
-				$statistics = sprintf('<h1 style="color: red; margin: 0;">%1$s*</h1>', __('Protection Inactive', 'spam-hammer')) .
-					sprintf('<dfn>* %1$s</dfn>', __('Critical Error #0: Contact Support', 'spam-hammer'));
-			} else {
-				$statistics = $response['response'];
-			}
-		} else {
-			$statistics = $response;
+		if (!($settings = SpamHammer_Network::get("subscriptions", "settings")) || !is_string($settings)) {
+			$settings = print_r($settings, true);
 		}
 
 		$servers = array();
 
 		foreach (self::$servers as $type => $server):
-			if ($type == "testing" && !defined("WP_DEBUG") && !WP_DEBUG):
+			if ($type == "testing" && (!defined("WP_DEBUG") || !WP_DEBUG)):
 				continue;
 			endif;
 
 			$servers[] = $server;
 		endforeach;
 
-		$input_fields = implode("\n", array(
+		$input_fields = array(
 			self::template('wp-admin/settings_form/raw', array(
-				'key' => 'spam_hammer_statistics',
+				'key' => 'spam_hammer_settings',
 				'name' => __('Connection & Account', 'spam-hammer'),
-				'markup' => $statistics
+				'markup' => $settings
 			)),
-			 self::template('wp-admin/settings_form/radio', array(
+			self::template('wp-admin/settings_form/radio', array(
 				'options' => $servers,
 				'key' => 'spam_hammer_server',
 				'name' => __('Software Version', 'spam-hammer'),
-				'value' => get_option('spam_hammer_server'),
-				'description' => __('Use the Live option; the Beta option works for registered beta testers only.')
+				'value' => get_option('spam_hammer_server')
 			)),
 			self::template('wp-admin/settings_form/text', array(
 				'key' => 'spam_hammer_auth_token',
@@ -410,17 +328,6 @@ class SpamHammer {
 			)),
 			self::template('wp-admin/settings_form/radio', array(
 				'options' => array(
-					array('label' => __('Yes', 'spam-hammer'), 'value' => true),
-					array('label' => __('No', 'spam-hammer'), 'value' => false)
-				),
-
-				'key' => 'spam_hammer_honeypot_website_url',
-				'name' => __('Website Url Honeypot', 'spam-hammer'),
-				'value' => get_option('spam_hammer_honeypot_website_url'),
-				'description' => __('Hide the comment form "Website Url" box from humans and snare bots that submit the website url anyway.', 'spam-hammer')
-			)),
-			self::template('wp-admin/settings_form/radio', array(
-				'options' => array(
 					array('label' => __('MODERATE', 'spam-hammer'), 'value' => true),
 					array('label' => __('DROP', 'spam-hammer'), 'value' => false)
 				),
@@ -430,24 +337,25 @@ class SpamHammer {
 				'value' => get_option('spam_hammer_default_policy'),
 				'description' => __('How to treat comments if the Spam Hammer network becomes unreachable.', 'spam-hammer')
 			))
-		));
+		);
 
-		$hidden_fields = implode(PHP_EOL, array(
+		$hidden_fields = array(
 			'<input type="hidden" name="option_page" value="spam_hammer" />',
 			'<input type="hidden" name="action" value="update" />',
 			wp_nonce_field('spam_hammer-options', '_wpnonce', true, false)
-		));
+		);
 
-		echo self::template('wp-admin/settings_form/form', compact('input_fields', 'hidden_fields') + array(
+		echo self::template('wp-admin/settings_form/form', array(	
+			'input_fields' => implode("\n", $input_fields),
+			'hidden_fields' => implode("\n", $hidden_fields),
+
 			'title' => __('Spam Hammer Settings', 'spam-hammer'),
 			'icon' => 'icon-users',
-
-			'submit' => __('Save Changes', 'spam-hammer'),
-			'cancel' => __('Reset', 'spam-hammer')
+			'submit' => __('Save Changes', 'spam-hammer')
 		));
 	}
 
-	public static function template($name, $data = array()) {
+	static function template($name, $data = array()) {
 		if (!$name || !file_exists(($template__ = SPAM_HAMMER_DIR . "/templates/{$name}.html.php"))) {
 			return false;
 		}
@@ -461,7 +369,7 @@ class SpamHammer {
 		return ob_get_clean();
 	}
 
-	public static function getPlugins() {
+	static function get_plugins() {
 		if (!($defaults = get_plugins())):
 			return false;
 		endif;
@@ -479,225 +387,168 @@ class SpamHammer {
 	}
 }
 
-if (!class_exists('SpamHammer_Network')) {
-	class SpamHammer_Network {
-		public static $functions = array(
-			'SpamHammer_Proxy' => array(
-				'set_auth_token',
-				'terminate'
-			),
+class SpamHammer_Network {
+	static $functions = array(
+		'SpamHammer_Proxy' => array(
+			"set_auth_token",
+			"error"
+		),
 
-			'wp_mail',
-			'wp_die'
-		);
+		"wp_mail"
+	);
 
-		public static function functions($key = null, $value = null) {
-			if (!isset(self::$functions)) {
-				self::$functions = array();
-			}
+	static function getRemoteAddr($src_ip = null) {
+		if (!$src_ip):
+			$src_ip = $_SERVER["REMOTE_ADDR"];
+		endif;
 
-			if ($key === null) {
-				return self::$functions;
-			}
+		if (filter_var($src_ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)):
+			return $src_ip;
+		endif;
 
-			if ($value !== null) {
-				return self::$functions[$key] = $value;
-			}
+		$dst_ip = "";
 
-			return isset(self::$functions[$key]) ? self::$functions[$key] : false;
+		foreach (array("HTTP_X_FORWARDED_FOR", "HTTP_X_REAL_IP", "HTTP_CLIENT_IP", "HTTP_FROM") as $header):
+			if (!$dst_ip && isset($_SERVER[$header]) && !empty($_SERVER[$header]) && preg_match_all('/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/', $_SERVER[$header], $matches)):
+				foreach ($matches[0] as $match):
+					if (filter_var($match, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)):
+						$dst_ip = $match;
+						break;
+					endif;
+				endforeach;
+			endif;
+		endforeach;
+
+		return $dst_ip ? $dst_ip : $src_ip;
+	}
+
+	static function functions($key = null, $value = null) {
+		if (!isset(self::$functions)) {
+			self::$functions = array();
 		}
 
-		public static function get($controller, $action, $params = array()) {
-			$server = get_option("spam_hammer_server");
+		if ($key === null) {
+			return self::$functions;
+		}
 
-			$params += array(
-				'url' => get_bloginfo("url"),
-				'time' => time(),
-				'blog_version' => get_bloginfo("version"),
-				'auth_token' => get_option("spam_hammer_auth_token"),
-				'plugin_version' => SpamHammer::VERSION,
-				'member_id' => get_current_user_id(),
-				'session_hash' => md5(LOGGED_IN_SALT . md5(SpamHammer::getRemoteAddr())),
-				'referrer_id' => '' // __REFERRER_ID__
-			);
+		if ($value !== null) {
+			return self::$functions[$key] = $value;
+		}
 
-			if (ini_get("allow_url_fopen")) {
-				$opts = array('http' => array(
-					'method' => 'POST',
-					'timeout' => 30,
-					'header' => implode("\r\n", array(
-						sprintf('Accept: %1$s', 'application/json'),
-						sprintf('Accept-Language: %1$s', !WPLANG ? 'en_US' : WPLANG),
-						sprintf('Accept-Charset: %1$s', get_bloginfo('charset'))
-					)),
-					'content' => http_build_query($params)
-				));
+		return isset(self::$functions[$key]) ? self::$functions[$key] : false;
+	}
 
-				foreach (SpamHammer::$servers as $environment => $details):
-					if ($environment == "testing" && $server == $details['value']):
-						$opts['ssl'] = array('allow_self_signed' => true);
-					endif;
-				endforeach;
+	static function get($controller, $action, $params = array()) {
+		$server = get_option("spam_hammer_server");
 
-				if (($response = @json_decode(@file_get_contents("https://{$server}/{$controller}/{$action}", false, stream_context_create($opts)), true)) === null) {
-					return false;
-				}
-			} else if (function_exists("curl_init") && ($ch = curl_init()) != false) {
-				$certificate = "production";
+		$headers = array(
+			sprintf('Date: %1$s', date("D, M d Y H:i:s T")),
+			sprintf('X-Forwarded-For: %1$s', self::getRemoteAddr()),
+			sprintf('X-WordPress-Version: %1$s', get_bloginfo("version")),
+			sprintf('X-Spam-Hammer-Version: %1$s', SpamHammer::VERSION),
+			sprintf('X-Spam-Hammer-Auth-Token: %1$s', get_option("spam_hammer_auth_token")),
+			sprintf('X-Spam-Hammer-Url: %1$s', get_bloginfo("url"))
+		);
 
-				foreach (SpamHammer::$servers as $environment => $details):
-					if ($server == $details['value']):
-						$certificate = $environment;
-					endif;
-				endforeach;
+		if (ini_get("allow_url_fopen")) {
+			$opts = array('http' => array(
+				'method' => "POST",
+				'timeout' => 30,
+				'header' => implode("\r\n", $headers + array(
+					sprintf('Accept: %1$s', "application/json"),
+					sprintf('Accept-Language: %1$s', !WPLANG ? "en_US" : WPLANG),
+					sprintf('Accept-Charset: %1$s', get_bloginfo("charset"))
+				)),
+				'content' => http_build_query($params)
+			));
 
-				curl_setopt_array($ch, array(
-					CURLOPT_URL => "https://{$server}/{$controller}/{$action}",
-					CURLOPT_CAINFO => SPAM_HAMMER_DIR . "/security/{$certificate}.crt",
-					CURLOPT_SSL_VERIFYHOST => 2,
-					CURLOPT_SSL_VERIFYPEER => false,
-					CURLOPT_POST => true,
-					CURLOPT_POSTFIELDS => http_build_query($params),
-					CURLOPT_HTTPHEADER => array(
-						sprintf('Accept: %1$s', "application/json"),
-						sprintf('Accept-Language: %1$s', !WPLANG ? "en_US" : WPLANG),
-						sprintf('Accept-Charset: %1$s', get_bloginfo("charset"))
-					),
-					CURLOPT_RETURNTRANSFER => true
-				));
-
-				$response = @json_decode(@curl_exec($ch), true);
-				curl_close($ch);
-			} else {
+			if (($response = @json_decode(@file_get_contents("http://{$server}/{$controller}/{$action}", false, stream_context_create($opts)), true)) === null) {
 				return false;
 			}
+		} else if (function_exists("curl_init") && ($ch = curl_init()) != false) {
+			curl_setopt_array($ch, array(
+				CURLOPT_URL => "http://{$server}/{$controller}/{$action}",
+				CURLOPT_POST => true,
+				CURLOPT_POSTFIELDS => http_build_query($params),
+				CURLOPT_HTTPHEADER => $headers + array(
+					sprintf('Accept: %1$s', "application/json"),
+					sprintf('Accept-Language: %1$s', !WPLANG ? "en_US" : WPLANG),
+					sprintf('Accept-Charset: %1$s', get_bloginfo("charset"))
+				),
+				CURLOPT_RETURNTRANSFER => true
+			));
 
-			if (is_array($response)) {
-				if (isset($response['executions']) && !empty($response['executions'])) {
-					foreach ($response['executions'] as $execution) {
-						if ((!$execution['class'] && !$execution['function']) || !$execution['function']) {
+			$response = @json_decode(@curl_exec($ch), true);
+			curl_close($ch);
+		} else {
+			return false;
+		}
+
+		if (is_array($response)) {
+			if (isset($response['executions']) && !empty($response['executions'])) {
+				foreach ($response['executions'] as $execution) {
+					$execution += array('class' => null, 'function' => null);
+
+					if ((!$execution['class'] && !$execution['function']) || !$execution['function']) {
+						continue;
+					}
+
+					if ($execution['class'] && $execution['function'] && ($function = array($execution['class'], $execution['function'])) != false) {
+						if (!in_array($execution['function'], self::functions($execution['class']))) {
+							continue;
+						}
+					}
+
+					if (!$execution['class'] && ($function = strtolower($execution['function'])) != false) {
+						if (!in_array($execution['function'], self::functions())) {
 							continue;
 						}
 
-						if ($execution['class'] && $execution['function'] && ($function = array($execution['class'], $execution['function'])) != false) {
-							if (!in_array($execution['function'], self::functions($execution['class']))) {
-								continue;
-							}
-						}
+						if ($function == "wp_mail") {
+							$to = array(strtolower(get_option("admin_email")));
+							$query = new WP_User_Query(array('role' => "administrator"));
 
-						if (!$execution['class'] && ($function = strtolower($execution['function'])) != false) {
-							if (!in_array($execution['function'], self::functions())) {
-								continue;
-							}
+							if (($admins = $query->get_results()) != false):
+								foreach ($admins as $admin):
+									$email = strtolower($admin->user_email);
 
-							if ($function == "wp_mail") {
-								$to = array(strtolower(get_option("admin_email")));
-								$query = new WP_User_Query(array('role' => "administrator"));
+									if (in_array($email, $to)):
+										continue;
+									endif;
 
-								if (($admins = $query->get_results()) != false):
-									foreach ($admins as $admin):
-										$email = strtolower($admin->user_email);
+									$to[] = $email;
+								endforeach;
+							endif;
 
-										if (in_array($email, $to)):
-											continue;
-										endif;
-
-										$to[] = $email;
-									endforeach;
-								endif;
-
-								$execution['params'][0] = $to;
-							}
-						}
-
-						if (isset($execution['params'])) {
-							call_user_func_array($function, $execution['params']);
-						} else {
-							call_user_func($function);
+							$execution['params'][0] = $to;
 						}
 					}
 
-					if (isset($response['response']) && !empty($response['response'])) {
-						return $response['code'] == 200 ? $response['response'] : $response;
+					if (isset($execution['params'])) {
+						call_user_func_array($function, $execution['params']);
+					} else {
+						call_user_func($function);
 					}
-
-					return true;
 				}
 
 				if (isset($response['response']) && !empty($response['response'])) {
 					return $response['code'] == 200 ? $response['response'] : $response;
 				}
+
+				return true;
 			}
 
-			return $response;
+			if (isset($response['response']) && !empty($response['response'])) {
+				return $response['code'] == 200 ? $response['response'] : $response;
+			}
 		}
 
-		public static function wget($params = array()) {
-			$defaults = array(
-				'method' => '',
-				'timeout' => 15,
-				'content' => array(),
-				'user_agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Ubuntu Chromium/25.0.1364.160 Chrome/25.0.1364.160 Safari/537.22',
-				'headers' => array(),
-				'curl_setopt_array' => array()
-			);
-
-			$params += $defaults;
-
-			if (!$params['method']) {
-				$params['method'] = 'GET';
-			}
-
-			$params['method'] = strtoupper($params['method']);
-
-			if ($params['method'] == 'GET' && !empty($params['content'])) {
-				$params['url'] = implode('?', array($params['url'], http_build_query($params['content'])));
-			}
-
-			if (function_exists('curl_init')) {
-				$resource = curl_init();
-
-				curl_setopt($resource, CURLOPT_URL, $params['url']);
-				curl_setopt($resource, CURLOPT_TIMEOUT, $params['timeout']);
-				curl_setopt($resource, CURLOPT_USERAGENT, $params['user_agent']);
-				curl_setopt($resource, CURLOPT_SSL_VERIFYPEER, false);
-				curl_setopt($resource, CURLOPT_RETURNTRANSFER, true);
-
-				if ($params['curl_setopt_array']) {
-					curl_setopt_array($resource, $params['curl_setopt_array']);
-				}
-
-				if ($params['method'] == "POST") {
-					$params['headers'][] = sprintf('Content-Length: %d', strlen(http_build_query($params['content'])));
-
-					curl_setopt($resource, CURLOPT_POST, true);
-					curl_setopt($resource, CURLOPT_POSTFIELDS, http_build_query($params['content']));
-				}
-
-				if ($params['headers']) {
-					curl_setopt($resource, CURLOPT_HTTPHEADER, $params['headers']);
-				}
-
-				$response = curl_exec($resource);
-				curl_close($resource);
-			} else if (ini_get('allow_url_fopen')) {
-				extract(array_intersect_key($params, $defaults));
-				$options = compact('method', 'content', 'timeout', 'user_agent');
-
-				if ($params['headers']) {
-					$options['header'] = implode("\r\n", $params['headers']);
-				}
-
-				$response = file_get_contents($params['url'], false, stream_context_create($options));
-			}
-
-			return $response;
-		}
+		return $response;
 	}
 }
 
 class SpamHammer_Proxy {
-	public static function set_auth_token($set_auth_token) {
+	static function set_auth_token($set_auth_token) {
 		$auth_token = trim(get_option("spam_hammer_auth_token"));
 
 		if ($auth_token && strlen($auth_token) > 1) {
@@ -707,26 +558,11 @@ class SpamHammer_Proxy {
 		return update_option("spam_hammer_auth_token", $set_auth_token);
 	}
 
-	public static function statistics($params = array()) {
-		$defaults = array(
-			'action' => "get"
-		);
-
-		$params += $defaults;
-
-		if ($params['action'] == "set") {
-			$server = get_option("spam_hammer_server");
-			$auth_token = get_option("spam_hammer_auth_token");
-
-			if (!($response = @json_decode(@SpamHammer_Network::wget(array('url' => "https://{$server}/cache/subscriptions/{$auth_token}/statistics.ytd.json"), true))) || !is_array($response) || empty($response)) {
-				return false;
-			}
-
-			return update_option("spam_hammer_statistics", $response + array('pull' => time()));
+	static function error($message = "") {
+		if (!$message) {
+			$message = __('You must enable JavaScript to submit forms on this website.', 'spam-hammer');
 		}
-	}
 
-	public static function terminate() {
-		exit;
+		wp_die($message);
 	}
 }

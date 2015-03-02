@@ -2,109 +2,93 @@
 Contributors: wpspamhammer
 Tags: post, plugin, admin, posts, comments, page, premium, spam blocker, serviceware
 Requires at least: 3.0.0
-Stable tag: 3.9.8.7
+Stable tag: 4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-"My business blog was shut down by Bluehost because the spam attack on my site was..." Blocks/Total Spam Attacks: 16,043,156
+"My business blog was shut down by Bluehost because the spam attack on my site was..." Blocks/Total Spam Attacks: 16,042,697
 
 == Description ==
  
 > _"My business blog was shut down by Bluehost because the spam attack on my site was compromising their server performance. I installed Spam Hammer and from the moment I turned it on until now, 2 days later I have received none of the 2,300+ spam messages sent at my site and everything is running smoothly."_
 
-[Install with a simple download and activate -- no setup required.  You can comfortably try the service and contribute back to it as a license owner after using it for some days.](http://www.wpspamhammer.com)
+[Install It Now](http://www.wpspamhammer.com/install) or ["Do It For Me"](http://www.wpspamhammer.com/do-it-for-me)
 
-> Yes, It Actually Works
+Spam Hammer is an aggressive anti-spam service for WordPress that repels Spammers from your website's comment and registration forms.
 
-Most WordPress anti spam tools amount to garbage, both built in to WordPress, and third party plugins. The built in tools are mediocre, and at best force you to babysit new comments and registrations.
+It can be customized to protect all parts of your website, including other plugins, at your request.  See what others say.
 
-On the other hand, third party plugins are all over the map. Many make your real, interested readers jump through hoops to sign up and/or leave comments on your site, assuming they are that patient.
+> _"Michael D. says: After I went to the nuclear side of advanced global combat, it fixed the problem! My administrator was threatening to pull my site down, etc., until the problem was resolved, but going nuclear fixed the problem and have had ZERO spam filter issues."
 
-Others simply don’t work anymore, and you are left reacting to spam invasions. Things shouldn’t be this way, and there’s a reason those plugins don’t work: they’re built on the wrong idea.
+> _"Teresa Y. says: Thank you for the email. I haven't had any new spam posts in the 3 days! I was getting about 30 a day. Thank you!"
 
-Spam must be defended against, right? Wrong. Spam hurts the invaluable image of your business and saps your time – your anti spam must violently fight to destroy the Spammers, not defend against them.
+> _"Mike R. says: Spam "hammer" is exactly the right name. I have gotten any since I installed it - fricken awesome dude."
 
-Don’t take the lead and Spammers will walk over you. That’s why Spam Hammer works: it takes the fight to them, instead of waiting for them to bring it to you. Don't take my word for it -- see
+> _"Emilie says: It seems to be working quite well, thanks!"
 
-What Others Say
+> _"Vahid S. says: It's really working and make me free from spammers.  Thanks for your supporting."
 
-> 3 Types of Spammers
+> _"Nick T. says: It is working very well thank you!!  Really happy with it.  Keep up the good work!"
 
-Spammers generally fall into 3 categories. The first type offers "SEO" services to unsuspecting site owners at seemingly reasonable costs, promising X links to their clients' sites and high search rankings.
+> _"Stephen C. says: It's working great!  Very pleased."
 
-The second type of Spammer advertises for an ad network, similar to Google Adwords, or a marketplace, like Amazon or Clickbank. They pay Spammers for clicks, and advertisers/product sellers pay them.
+> _"Joe W. says: Its going great i had a spam attack 3 months ago and i used a trial of i different that was ok then i used yours and its great."
 
-The third type of Spammer sells physical products directly through small sites of their own or hacked sites. They sell trending counterfeit luxury handbags, footwear, clothes, and other retail items.
+> _"Eva J. says: I was being attacked in a intermittent manner, I had plenty of spam messages in a day; now 1 week without spam."
 
-> Be The Aggressor
+> _"Adrien S. says: I had 100 spam messages the other day, and after installing Spam Hammer ... zero.  That happens to be the same number of real comments, but that just means I need to work on my blogging skills, ha ha!"
 
-Spammers spend money blast your site with an end goal of a profit. If they first fail, they hire a person solve whatever captcha or antispam you’re running. If even that fails, attacking you is a net loss.
+> _"Ian D. says: I have seen no new spam comments since I installed it. I was recieving lots of them even though I set WP to no comments. Has not affected site negatively. I'll keep you posted. Thank you."
 
-If it happens once or twice, the Spammer only loses fractions of a penny.  But, the costs compound as more take action.  By being aware of this and acting intelligently, you're in the position of the aggressor.
+> _"Ted says: It works very well, it blocked more than 57 in the past 30 hours."
 
-You might think that's a stretch. But, think about it again: instead of thinking "how do I stop spammers", you think "how do I hurt spammers". Stopping Spammers then comes automatically. It's a BIG shift.
+> _"Jane says: It's working great!  Thank you!"
 
-Seeing this threat, and after a string of failed attacks, Spammers try to pick apart Spam Hammer. It's on the cloud so they can’t. Knowing they are helpless, some email me swear words in broken English.
+> _"Chance W. says: Thus far seems to be getting rid of spam i was experiencing before."
 
-Spam Hammer attacks for you hands-free in many different ways, not bothering real visitors and readers. The biggest of it's many ways are: 1. Geo blocking 2. Wasting their time and 3. Going above their heads.
+> _"Paolo M. says: I can't believe what I see... No spam, not one spam email from when I mounted this plugin... Is it a dream?..."
 
-> 1. Uncommon Sense: Geo Blocking
+> _"Sebby says: I don't think I've seen a spam sign up in a few days. :o :)"
 
-Most spam is made on computers outside the home country of your site. Some countries tacitly permit spamming, while others like Bulgaria are safe havens for big spam services due to the country’s laws.
+> _"Chris B. says: My business blog was shut down by Bluehost because the spam attack on my site was compromising their server performance. I installed Spam Hammer and from the moment I turned it on until now, 2 days later, I have received none of the 2,300+ spam messages sent at my site and everything is running smoothly."
 
-If you run a local business in the USA, why would you accept comments from computers in Ukraine?As you know, sometimes, common sense isn't so common. There is no reason to accept those comments.
+> _"Denise M. says: The first night installed, my spam comments dropped to 0."
 
-Spam Hammer provides both country and continent blocking, so while those blocked can visit you, they can't comment or register. This is very aggressive against big spammers, who have location limitations.
+> _"Robyn H. says: Its lovely. Finally not getting any spam!"
 
-Popular spamming countries are blocked out of the box, but you can change these at anytime. If it's not practical to block geographically, the other features work perfectly fine without this.
+> _"Don Y. says: Works well.  This is the third one I've tried and first one that's worked.  I have zero spam comments when I used to get sometimes dozens a day."
 
-> 2. Revenge: Wasting Their Time
+> _"Chris says: Spam Hammer has made my life easier. I no longer have to approve 100 members over night, and the false positives are kept to a minimal. I highly recommend installing this addon if you value your sanity."
 
-Spammers perversely expose themselves to tens of thousands of sites, so the amount of time they spend blasting one can’t stretch too long. 5 seconds spent on each of 10,000 sites is over half a day.
+> _"Mick says: Since installing the this mod my level of protection has increased amazingly and I have to say my once tired moderators are thinking I'm god....NO Steve you are mate! Best thing ever and he just keeps giving, once you are onboard it seems the support is unfailing; Spam Attack Preventions: 105,567 Unique Spambots Today 8, Week: 8, Month: 1,585, Year: 7,469 Been working great for me"
 
-What if I told you this is a major risk factor for Spammers, beyond IP blacklisting? What if visitors had to wait 15 seconds before posting a comment? What if real readers weren’t bothered by it, only Spammers?
+> _"Dan says: I've been using this mod for a few months now and tbh I couldn't manage without it. The amount of spam it catches is second to none. This is probably the no1 plugin requirement for vbulletin and should be made default."
 
-Where a real visitor would read the page, scroll down, then fill out a comment, Spammers would instantly try to jam in a comment, making it easy to catch them – real visitors 100% unharmed.
+> _"Jessi says: Before Spam Hammer, my blog/website was becoming overrun with spam comments. I couldn't get anything done because I had 500+ comments to go through & moderate every time I logged on to my site . I tried everything, captcha, math equations, every plugin I could find to relieve some of the spam, and  NOTHING helped.  The day I tried Spam Hammer, everything changed, it was amazing so easy to use and exceptional at getting through the spam.  I LOVE logging on to  seeing the massive number of blocked spam attempts, as well as the chart of how many attempts per hour."
 
-This would cause Spam programs to desperately and repeatedly try to figure out why spam isn’t going through, when there is no captcha or question on the page. Spam Hammer adds this timer.
+> _"Phil says: Ive reclaimed at least an hour of my life every day since installing the spamhammer plugin. Spammers have been nearly 100% eliminated where they are not even making it into the queue to be released. Highly recommended if your having trouble with spammers."
 
-> 3. Going Above Their Heads
+> _"Tony D. says: Work perfect, no spam till now and it really save my time. already Spambot Blocks: 34  (1days) i set up my Countdown to 19' i have been blocking : BANGLADESH , BELARUS, CHINA,  INDIA, KAZAKHSTAN,  PAKISTAN, RUSSIAN FEDERATION,TAIWAN,and UKRAINE great plug ing"
 
-Spam comments always link to external sites. Many links are cloaked so you can’t see the real site until you click the cloaked link and get redirected. Why the secrecy, if you'd see the real site anyway?
+> _"Anders M. says: Hammer 3-Series is working very well. Before I installed this amazing plugin I got lots of spam and now not a single one, so I will definitely buy this one for my site when trial is over."
 
-It's simple: they fear retribution. But from who, if not you? In truth, they are scared you’d discover who 1. they are 2. who's above their heads.  It risks termination of their activities and can tank their profits.
+> _"Jeff S. says: It's working great."
 
-Learn more about how for you, Spam Hammer automates the process of unmasking these Spammers, and then launching an attack on them so they are hemorrhaging money, thru [Bloodhound](http://www.wpspamhammer.com/bloodhound).
+> _"Sascha M. says: The Spam Hammer has definitely helped kill all the bots that were accessing my company's forums. Great job on the coding of the mod."
 
-> Never Again
+> _"Andrew M. says: Don't need to manually approve new users any more. It does such a good job I can let new users straight in to the forum with no manual intervention from me :)"
 
-Never again will your real readers' comments be recognized as spam, leaving them wondering if the content they took the time to write on your site even reached the other end.
+> _"Jim L. says: It is hammering away! I have had around 8-10 alerts since I've installed it."
 
-Never again will they contact you and ask you “why”. Never again will readers lose the pleasure of commenting on your site, and instead spread the word about your site having spam problems.
+> _"Rick H. says: Spam Attack Preventions: 18295 Unique Spambots Today: 15, Week: 362, Month: 597, Year: 597"
 
-Never again will you get hundreds of emails about spam comments in your queue, awaiting you to pick out the one or two comments that are real and mass deleting the rest, over and over.
+> _"Vladmir D. says: things are looking good. Spammer signups are down, very solid product all in all!"
 
-Never again will already registered, legitimate readers, including administrators, be blocked from posting after it’s stupidly clear they're not Spammers.
+> _"Jasmit B. says: the mod is working great and yes now I can say....SPAMMERS SUCK...."
 
-> Try It Risk-Free
+> _"Mark B. says: I went and pulled this from my stats (from running for about week & a half with SpamHammer 3 platinum):  Spambot Blocks: 31105"
 
-The testimonials are there because this is a professional service. I’m extending 7 days of Free, completely unlocked use of the plugin to professionals and businesses. There is zero risk to you.
-
-> Compatibility
-
-1. Standard Comment Form
-2. Standard Registration Form
-3. _[NEW]_ Contact Form 7
-
-> Incompatibility
-
-1. Jetpack Comments & any other comment, registration, or contact form plugin.
-
-== Screenshots ==
-
-1. Dashboard Statistics
-2. Registration Page
-3. Comment Page
+> _"Dave says: I was spending a 1/2 hour to an hour each day approving new members, and that was with Glowhost and Captcha active. I deactivated Glowhost and I installed this mod a week ago and have had over 5500 spam registrations blocked and I've been able to turn off modded registration. Only one or two people spammers got through. I'm definitely liking this mod."
 
 == Installation ==
 
@@ -113,6 +97,21 @@ The testimonials are there because this is a professional service. I’m extendi
 3. Activate the plugin through the Admin Controls under `Plugins` > `Installed Plugins`.
 
 == Changelog ==
+
+= 4.0 =
+
+* This is a mandatory upgrade; previous versions will *not* work.
+* New: We now 100% finance your protection from the plugin on your first website.
+* New: Add-on system.
+* New: Up to 900% loading time decrease, all around performance improvements.
+* New: Request interception system to save you bandwidth and other server resources.
+* New: Now compatible with all other plugins/forms; custom form protection supported thru "Tailor" add-on.
+* Fixed: PHP Notices In Debug Mode
+* Removed: Timers (and their associated settings)
+* Removed: Attacks Chart & Counter
+* Removed: Top 10 Sites (this can make a comeback, with feedback)
+* Removed: Protected Form Text Branding (replaced by a corner icon on protected pages)
+* Removed: Statistics Widget
 
 = 3.9.8.6 =
 
