@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "4.0";
+	const VERSION = "4.0.1";
 
 	static $servers = array(
 		'production' => array(
@@ -96,7 +96,7 @@ class SpamHammer {
 			return $default;
 		endif;
 
-		return self::selectors();
+		return null;
 	}
 
 	static function default_option_true($default = null) {

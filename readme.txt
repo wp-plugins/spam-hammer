@@ -2,7 +2,7 @@
 Contributors: wpspamhammer
 Tags: post, plugin, admin, posts, comments, page, premium, spam blocker, serviceware
 Requires at least: 3.0.0
-Stable tag: 4.0
+Stable tag: 4.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,10 @@ It can be customized to protect all parts of your website, including other plugi
 3. Activate the plugin through the Admin Controls under `Plugins` > `Installed Plugins`.
 
 == Changelog ==
+
+= 4.1 =
+
+* CRITICAL fix for 4.0 bug that prevents activation
 
 = 4.0 =
 
