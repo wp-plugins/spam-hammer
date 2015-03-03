@@ -90,7 +90,7 @@ It can be customized to protect all parts of your website, including other plugi
 
 == Changelog ==
 
-= 4.1 =
+= 4.0.1 =
 
 * CRITICAL fix for 4.0 bug that prevents activation
 
