@@ -14,11 +14,11 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 [Install It Now](http://www.wpspamhammer.com/install) or ["Do It For Me"](http://www.wpspamhammer.com/do-it-for-me)
 
-Spam Hammer is an aggressive anti-spam service for WordPress that repels Spammers from your website's comment and registration forms.
+Spam Hammer is an aggressive, premium anti-spam service for WordPress that repels Spammers from your website's forms.
 
 It works by intercepting spam long before it reaches you, without interrupting real traffic.  No moderation, no captchas.
 
-It can be customized to protect all parts of your website, including other plugins, at your request.  See what others say.
+I 100% finance your use on the first website, even if it's commercial; you pay nothing out of pocket to start.
 
 > _Michael D. says: "After I went to the nuclear side of advanced global combat, it fixed the problem! My administrator was threatening to pull my site down, etc., until the problem was resolved, but going nuclear fixed the problem and have had ZERO spam filter issues."_
 
