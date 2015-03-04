@@ -1,4 +1,4 @@
-=== Flip It On Spammers! Be The Aggressor ===
+=== Stop! You Never Have To Fight Spam Again ===
 Contributors: wpspamhammer
 Tags: post, plugin, admin, posts, comments, page, premium, spam blocker, serviceware
 Requires at least: 3.0.0
@@ -15,6 +15,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 [Install It Now](http://www.wpspamhammer.com/install) or ["Do It For Me"](http://www.wpspamhammer.com/do-it-for-me)
 
 Spam Hammer is an aggressive anti-spam service for WordPress that repels Spammers from your website's comment and registration forms.
+
+It works by intercepting spam long before it reaches you, without interrupting real traffic.  No moderation, no captchas.
 
 It can be customized to protect all parts of your website, including other plugins, at your request.  See what others say.
 
