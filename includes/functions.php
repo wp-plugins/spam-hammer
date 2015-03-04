@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "4.0.1";
+	const VERSION = "4.0.2";
 
 	static $servers = array(
 		'production' => array(
@@ -450,22 +450,9 @@ class SpamHammer_Network {
 			sprintf('X-Spam-Hammer-Url: %1$s', get_bloginfo("url"))
 		);
 
-		if (ini_get("allow_url_fopen")) {
-			$opts = array('http' => array(
-				'method' => "POST",
-				'timeout' => 30,
-				'header' => implode("\r\n", $headers + array(
-					sprintf('Accept: %1$s', "application/json"),
-					sprintf('Accept-Language: %1$s', !WPLANG ? "en_US" : WPLANG),
-					sprintf('Accept-Charset: %1$s', get_bloginfo("charset"))
-				)),
-				'content' => http_build_query($params)
-			));
+		$exec = false;
 
-			if (($response = @json_decode(@file_get_contents("http://{$server}/{$controller}/{$action}", false, stream_context_create($opts)), true)) === null) {
-				return false;
-			}
-		} else if (function_exists("curl_init") && ($ch = curl_init()) != false) {
+		if (function_exists("curl_init") && ($ch = curl_init()) != false) {
 			curl_setopt_array($ch, array(
 				CURLOPT_URL => "http://{$server}/{$controller}/{$action}",
 				CURLOPT_POST => true,
@@ -478,11 +465,33 @@ class SpamHammer_Network {
 				CURLOPT_RETURNTRANSFER => true
 			));
 
-			$response = @json_decode(@curl_exec($ch), true);
+			if (($exec = @curl_exec($ch)) !== false):
+				$response = @json_decode($exec, true);
+			endif;
+
 			curl_close($ch);
-		} else {
-			return false;
 		}
+
+		if ($exec === false && ini_get("allow_url_fopen")) {
+			$opts = array('http' => array(
+				'method' => "POST",
+				'timeout' => 30,
+				'header' => implode("\r\n", $headers + array(
+					sprintf('Accept: %1$s', "application/json"),
+					sprintf('Accept-Language: %1$s', !WPLANG ? "en_US" : WPLANG),
+					sprintf('Accept-Charset: %1$s', get_bloginfo("charset"))
+				)),
+				'content' => http_build_query($params)
+			));
+
+			if (($exec = @file_get_contents("http://{$server}/{$controller}/{$action}", false, stream_context_create($opts))) != false):
+				$response = @json_decode($exec, true);
+			endif;
+		}
+
+		if ($exec === false):
+			return false;
+		endif;
 
 		if (is_array($response)) {
 			if (isset($response['executions']) && !empty($response['executions'])) {

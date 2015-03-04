@@ -2,7 +2,7 @@
 Contributors: wpspamhammer
 Tags: post, plugin, admin, posts, comments, page, premium, spam blocker, serviceware
 Requires at least: 3.0.0
-Stable tag: 4.0.1
+Stable tag: 4.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,9 +90,13 @@ It can be customized to protect all parts of your website, including other plugi
 
 == Changelog ==
 
+= 4.0.2 =
+
+* CRITICAL fix for 4.0 bug that shows upgrade error to some sites.
+
 = 4.0.1 =
 
-* CRITICAL fix for 4.0 bug that prevents activation
+* CRITICAL fix for 4.0 bug that prevents activation.
 
 = 4.0 =
 
@@ -102,12 +106,12 @@ It can be customized to protect all parts of your website, including other plugi
 * New: Up to 900% loading time decrease, all around performance improvements.
 * New: Request interception system to save you bandwidth and other server resources.
 * New: Now compatible with all other plugins/forms; custom form protection supported thru "Tailor" add-on.
-* Fixed: PHP Notices In Debug Mode
-* Removed: Timers (and their associated settings)
-* Removed: Attacks Chart & Counter
-* Removed: Top 10 Sites (this can make a comeback, with feedback)
-* Removed: Protected Form Text Branding (replaced by a corner icon on protected pages)
-* Removed: Statistics Widget
+* Fixed: PHP Notices In Debug Mode.
+* Removed: Timers (and their associated settings).
+* Removed: Attacks Chart & Counter.
+* Removed: Top 10 Sites (this can make a comeback, with feedback).
+* Removed: Protected Form Text Branding (replaced by a corner icon on protected pages).
+* Removed: Statistics Widget.
 
 = 3.9.8.6 =
 
