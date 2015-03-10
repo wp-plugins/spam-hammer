@@ -1,8 +1,8 @@
-=== Stop! You Never Have To Fight Spam Again ===
+=== No Captchas, No Moderation, No Puzzles - Simple ===
 Contributors: wpspamhammer
 Tags: post, plugin, admin, posts, comments, page, premium, spam blocker, serviceware
 Requires at least: 3.0.0
-Stable tag: 4.0.2
+Stable tag: 4.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,11 +14,51 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 [Install It Now](http://www.wpspamhammer.com/install) or ["Do It For Me"](http://www.wpspamhammer.com/do-it-for-me)
 
-Spam Hammer is an aggressive, premium anti-spam service for WordPress that repels Spammers from your website's forms.
+What if... you woke up in the morning, logged into your website, check for email notifications... and spam wasn't there.
 
-It works by intercepting spam long before it reaches you, without interrupting real traffic.  No moderation, no captchas.
+What if, you could see real comments, real content, real signups... real activity... not endless pages of spam.
 
-I 100% finance your use on the first website, even if it's commercial; you pay nothing out of pocket to start.
+What if you had more time in your day, to focus on getting more traffic.  More time to sharpen your search engine rankings.
+
+
+
+What if your website wasn't under the threat of being terminated instantly without any warning, for no apparent reason.
+
+What if you didn't miss opportunities for website growth, because you were too busy trying to catch up to Spammers.
+
+What if you didn't have to worry about babysitting new content for eternity, afraid that most of it is spam.
+
+<h2>Yes, Most Anti-spam Is Garbage</h2>
+
+Most WordPress anti-spam tools, both built in and third party, are impotent, you know this from personal experience.
+
+Most make your real, interested traffic jump through hoops to share content on your site, stealing your natural growth.
+
+Most simply don't work, are complex, made by unreliable coders, and waste your time as you shuffle through them.
+
+
+
+About two years ago in my software consultancy, at the request of a client, I made an anti-spam plugin.
+
+It was simple and effective; so effective, that my client asked me to release the plugin to the public, and I obliged.
+
+Things were going well for many months, until Spammers saw the plugin and reverse-engineered it.  It was time to fight back.
+
+<h2>Fighting Back</h2>
+
+With the help of some clients, I launched a premium cloud version that was completely immune to reverse engineering.
+
+I then worked to make it invisible to end-users, lightning fast, able of protect every form, not just comments and registrations.
+
+My clients were raving about it, and it <i>was</i> up to $97/yr to use.  <b>I now 100% pay for your 1st website, <u>even if it's commercial</u>.</b>
+
+> _[See what others say](http://www.wpspamhammer.com/testimonials)_
+
+A few months ago, the owner of a spam network sent me an email with curses in broken English.  I was hurting their business.
+
+I then realized that the best way to deal with Spammers isn't to defend against them.  It's better to attack <i>them</i>.
+
+Not by attacking them back with Spam, but by attacking their wallets.  That is the philosophy Spam Hammer is built upon.
 
 > _Michael D. says: "After I went to the nuclear side of advanced global combat, it fixed the problem! My administrator was threatening to pull my site down, etc., until the problem was resolved, but going nuclear fixed the problem and have had ZERO spam filter issues."_
 

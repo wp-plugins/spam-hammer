@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "4.0.2";
+	const VERSION = "4.0.3";
 
 	static $servers = array(
 		'production' => array(
@@ -10,7 +10,7 @@ class SpamHammer {
 		),
 		'testing' => array(
 			'label' => "Beta (Testing)",
-			'value' => "test.services.wpspamhammer.com"
+			'value' => "test-services.wpspamhammer.com"
 		)
 	);
 
@@ -443,7 +443,11 @@ class SpamHammer_Network {
 
 		$headers = array(
 			sprintf('Date: %1$s', date("D, M d Y H:i:s T")),
+			sprintf('Accept: %1$s', "application/json"),
+			sprintf('Accept-Language: %1$s', !defined("WPLANG") || !WPLANG ? "en_US" : WPLANG),
+			sprintf('Accept-Charset: %1$s', get_bloginfo("charset")),
 			sprintf('X-Forwarded-For: %1$s', self::getRemoteAddr()),
+
 			sprintf('X-WordPress-Version: %1$s', get_bloginfo("version")),
 			sprintf('X-Spam-Hammer-Version: %1$s', SpamHammer::VERSION),
 			sprintf('X-Spam-Hammer-Auth-Token: %1$s', get_option("spam_hammer_auth_token")),
@@ -457,11 +461,7 @@ class SpamHammer_Network {
 				CURLOPT_URL => "http://{$server}/{$controller}/{$action}",
 				CURLOPT_POST => true,
 				CURLOPT_POSTFIELDS => http_build_query($params),
-				CURLOPT_HTTPHEADER => $headers + array(
-					sprintf('Accept: %1$s', "application/json"),
-					sprintf('Accept-Language: %1$s', !WPLANG ? "en_US" : WPLANG),
-					sprintf('Accept-Charset: %1$s', get_bloginfo("charset"))
-				),
+				CURLOPT_HTTPHEADER => $headers,
 				CURLOPT_RETURNTRANSFER => true
 			));
 
@@ -476,11 +476,7 @@ class SpamHammer_Network {
 			$opts = array('http' => array(
 				'method' => "POST",
 				'timeout' => 30,
-				'header' => implode("\r\n", $headers + array(
-					sprintf('Accept: %1$s', "application/json"),
-					sprintf('Accept-Language: %1$s', !WPLANG ? "en_US" : WPLANG),
-					sprintf('Accept-Charset: %1$s', get_bloginfo("charset"))
-				)),
+				'header' => implode("\r\n", $headers),
 				'content' => http_build_query($params)
 			));
 
