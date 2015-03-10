@@ -28,7 +28,7 @@ What if you didn't miss opportunities for website growth, because you were too b
 
 What if you didn't have to worry about babysitting new content for eternity, afraid that most of it is spam.
 
-<h2>Yes, Most Anti-spam Is Garbage</h2>
+> _Yes, Most Anti-spam Is Garbage_
 
 Most WordPress anti-spam tools, both built in and third party, are impotent, you know this from personal experience.
 
@@ -44,7 +44,7 @@ It was simple and effective; so effective, that my client asked me to release th
 
 Things were going well for many months, until Spammers saw the plugin and reverse-engineered it.  It was time to fight back.
 
-<h2>Fighting Back</h2>
+> _Fighting Back_
 
 With the help of some clients, I launched a premium cloud version that was completely immune to reverse engineering.
 
