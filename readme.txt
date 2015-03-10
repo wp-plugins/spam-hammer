@@ -1,4 +1,4 @@
-=== No Captchas, No Moderation, No Puzzles - Simple ===
+=== No Captchas, No Moderation, No Puzzles. ===
 Contributors: wpspamhammer
 Tags: post, plugin, admin, posts, comments, page, premium, spam blocker, serviceware
 Requires at least: 3.0.0
