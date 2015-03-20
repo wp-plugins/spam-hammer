@@ -126,13 +126,7 @@ Not by attacking them back with Spam, but by attacking their wallets.  That is t
 
 > _Mark B. says: "I went and pulled this from my stats (from running for about week & a half with SpamHammer 3 platinum):  Spambot Blocks: 31105"_
 
-== Installation ==
-
-1. Unzip spam-hammer.zip.
-2. Upload the `spam-hammer` folder (the folder itself, NOT it's contents) to the `/wp-content/plugins` directory.
-3. Activate the plugin through the Admin Controls under `Plugins` > `Installed Plugins`.
-
-== Translations included ==
+= Translations Included =
 
 * العربية (Arabic)
 * čeština (Czech)
@@ -165,7 +159,18 @@ Not by attacking them back with Spam, but by attacking their wallets.  That is t
 * 中文 (Chinese)
 * 中文（台灣） (Chinese (Taiwan))
 
+== Installation ==
+
+1. Unzip spam-hammer.zip.
+2. Upload the `spam-hammer` folder (the folder itself, NOT it's contents) to the `/wp-content/plugins` directory.
+3. Activate the plugin through the Admin Controls under `Plugins` > `Installed Plugins`.
+
 == Changelog ==
+
+= 4.1 =
+
+* Added 30 languages.
+* Fixed protection lapses.
 
 = 4.0.2 =
 
