@@ -2,7 +2,7 @@
 Contributors: wpspamhammer
 Tags: post, plugin, admin, posts, comments, page, premium, spam blocker, serviceware
 Requires at least: 3.0.0
-Stable tag: 4.0.3
+Stable tag: 4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,6 +13,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 > _"My business blog was shut down by Bluehost because the spam attack on my site was compromising their server performance. I installed Spam Hammer and from the moment I turned it on until now, 2 days later I have received none of the 2,300+ spam messages sent at my site and everything is running smoothly."_
 
 [Install It Now](http://www.wpspamhammer.com/install) or ["Do It For Me"](http://www.wpspamhammer.com/do-it-for-me)
+
+> _Smashes Spam Comments, Trackbacks, & Registrations (and anything else, with the Tailor add-on) in 31 Languages_
 
 What if... you woke up in the morning, logged into your website, check for email notifications... and spam wasn't there.
 
@@ -129,6 +131,39 @@ Not by attacking them back with Spam, but by attacking their wallets.  That is t
 1. Unzip spam-hammer.zip.
 2. Upload the `spam-hammer` folder (the folder itself, NOT it's contents) to the `/wp-content/plugins` directory.
 3. Activate the plugin through the Admin Controls under `Plugins` > `Installed Plugins`.
+
+== Translations included ==
+
+* العربية (Arabic)
+* čeština (Czech)
+* Dansk (Danish)
+* Deutsch (German)
+* Ελληνικά (Greek)
+* Español (Spanish)
+* Suomi (Finnish)
+* Français (French)
+* עברית (Hebrew)
+* Magyar (Hungarian)
+* Bahasa Indonesia (Indonesian)
+* Italiano (Italian)
+* 日本語 (Japanese)
+* 한국어 (Korean)
+* Bahasa Melayu (Malay)
+* Nederlands (Dutch)
+* Norsk (Norwegian)
+* Polski (Polish)
+* Português (Portuguese)
+* Română (Romanian)
+* русский (Russian)
+* Slovenčina (Slovak)
+* Српски (Serbian)
+* Svenska (Swedish)
+* ไทย (Thai)
+* Türkçe (Turkish)
+* українська (Ukrainian)
+* Tiếng Việt (Vietnamese)
+* 中文 (Chinese)
+* 中文（台灣） (Chinese (Taiwan))
 
 == Changelog ==
 

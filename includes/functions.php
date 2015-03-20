@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "4.0.3";
+	const VERSION = "4.1";
 
 	static $servers = array(
 		'production' => array(
@@ -35,6 +35,8 @@ class SpamHammer {
 			add_filter('pre_comment_approved', array(__CLASS__, 'pre_comment_approved'));
 			add_filter("wp_footer", array(__CLASS__, "wp_footer"));
 		} else {
+			add_filter('plugin_action_links', array(__CLASS__, "plugin_action_links"), 10, 2);
+
 			add_action('admin_init', array(__CLASS__, 'admin_init'));
 			add_action('admin_head', array(__CLASS__, 'admin_head'));
 			add_action('admin_menu', array(__CLASS__, 'admin_menu'));
@@ -115,6 +117,18 @@ class SpamHammer {
 		return false;
 	}
 
+	static function plugin_action_links($actions, $plugin_file) {
+		if (plugin_basename(SPAM_HAMMER_DIR . DIRECTORY_SEPARATOR . "index.php") == plugin_basename($plugin_file)):
+			foreach (array("http://www.wpspamhammer.com" => __('Website', 'spam-hammer'), admin_url("admin.php?page=" . str_replace("-", "_", basename(SPAM_HAMMER_DIR))) => __('Settings', 'spam-hammer')) as $key => $value):
+				$actions[] = sprintf('<a href="%1$s">%2$s</a>', $key, $value);
+			endforeach;
+
+			return $actions;
+		endif;
+
+		return $actions;
+	}
+
 	static function init() {
 		if (strcasecmp($_SERVER['REQUEST_METHOD'], "POST") !== 0):
 			return true;
@@ -166,8 +180,18 @@ class SpamHammer {
 	}
 
 	static function wp_head() {
+		$phrases = array(
+			'userAgent' => __('Your User Agent Is Missing Or Invalid', 'spam-hammer'),
+			'domain' => __('Your Domain Is Missing Or Invalid', 'spam-hammer'),
+			'authToken' => __('Your Authentication Token Is Missing Or Invalid', 'spam-hammer'),
+			'network' => __("There is suspicious activity on your network and you can only continue with the webmaster's assistance -- contact him or her immediately.", 'spam-hammer'),
+			'ip' => __("There is suspicious activity on your ip and you can only continue with the webmaster's assistance -- contact him or her immediately.", 'spam-hammer'),
+			'country' => __("There is suspicious activity from your country and you can only continue with the webmaster's assistance -- contact him or her immediately.", 'spam-hammer')
+		);
+
 		$selectors = get_option("spam_hammer_selectors");
-		printf('<script type="text/javascript">window.$pam_hammer = %1$s;</script>', json_encode(array("Options" => array("Server" => get_option("spam_hammer_server"), "Domain" => parse_url(get_bloginfo("url"), PHP_URL_HOST), "Forms" => $selectors['forms']), "Statuses" => array("New" => 0, "Request" => 1, "Response" => 2))));
+
+		printf('<script type="text/javascript">window.$pam_hammer = %1$s;</script>', json_encode(array("Options" => array("Server" => get_option("spam_hammer_server"), "Domain" => parse_url(get_bloginfo("url"), PHP_URL_HOST), "Forms" => $selectors['forms']), "Statuses" => array("New" => 0, "Request" => 1, "Response" => 2), 'Phrases' => $phrases)));
 		printf('<script type="text/javascript" async defer src="//%1$s/js/client/request.min.js"></script>', get_option("spam_hammer_server"));
 	}
 
@@ -176,6 +200,8 @@ class SpamHammer {
 	}
 
 	static function admin_init() {
+		global $wpdb;
+
 		if (($plugins = self::get_plugins()) != false):
 			foreach (array("spammers-suck") as $plugin):
 				if (in_array($plugin, array_keys($plugins)) && is_plugin_active("{$plugin}/{$plugins[$plugin]['Script']}")):
@@ -195,8 +221,6 @@ class SpamHammer {
 
 		if (!get_option("spam_hammer_auth_token")):
 			SpamHammer_Network::get("subscriptions", "settings");
-
-			global $wpdb;
 			$wpdb->query("UPDATE wp_posts SET ping_status = 'closed' WHERE post_type IN ('post', 'page')");
 		endif;
 
@@ -208,6 +232,10 @@ class SpamHammer {
 	}
 
 	static function selectors() {
+		global $wpdb;
+
+		$wpdb->query("UPDATE wp_posts SET ping_status = 'closed' WHERE post_type IN ('post', 'page')");
+
 		if (!($selectors = SpamHammer_Network::get("subscriptions", "selectors"))):
 			return false;
 		endif;
@@ -223,13 +251,14 @@ class SpamHammer {
 			get_option("spam_hammer_auth_token"),
 			get_option("timezone_string"),
 			"wordpress",
-			get_option("admin_email")
+			get_option("admin_email"),
+			str_replace("_", "-", get_locale())
 		);
 
 		wp_enqueue_script("jquery");
 
 		$tags = array(
-			'<script async defer src="//%1$s/js/admin/head.min.js" id="spam-hammer-wp-admin-head" data-spam-hammer-server="%1$s" data-spam-hammer-auth-token="%2$s"></script>',
+			'<script async defer src="//%1$s/js/admin/head.min.js" id="spam-hammer-wp-admin-head" data-spam-hammer-server="%1$s" data-spam-hammer-auth-token="%2$s" data-spam-hammer-timezone-string="%3$s" data-spam-hammer-platform="%4$s" data-spam-hammer-admin="%5$s" data-spam-hammer-locale="%6$s"></script>',
 			$settings ? '<script async defer src="//%1$s/js/admin/settings.min.js"></script>' : ""
 		);
 
@@ -296,7 +325,7 @@ class SpamHammer {
 		$input_fields = array(
 			self::template('wp-admin/settings_form/raw', array(
 				'key' => 'spam_hammer_settings',
-				'name' => __('Connection & Account', 'spam-hammer'),
+				'name' => __('Cloud Settings', 'spam-hammer'),
 				'markup' => $settings
 			)),
 			self::template('wp-admin/settings_form/radio', array(
@@ -444,7 +473,7 @@ class SpamHammer_Network {
 		$headers = array(
 			sprintf('Date: %1$s', date("D, M d Y H:i:s T")),
 			sprintf('Accept: %1$s', "application/json"),
-			sprintf('Accept-Language: %1$s', !defined("WPLANG") || !WPLANG ? "en_US" : WPLANG),
+			sprintf('Accept-Language: %1$s', str_replace("_", "-", get_locale())),
 			sprintf('Accept-Charset: %1$s', get_bloginfo("charset")),
 			sprintf('X-Forwarded-For: %1$s', self::getRemoteAddr()),
 
@@ -535,20 +564,14 @@ class SpamHammer_Network {
 						call_user_func($function);
 					}
 				}
-
-				if (isset($response['response']) && !empty($response['response'])) {
-					return $response['code'] == 200 ? $response['response'] : $response;
-				}
-
-				return true;
 			}
 
 			if (isset($response['response']) && !empty($response['response'])) {
-				return $response['code'] == 200 ? $response['response'] : $response;
+				return $response['code'] == 200 ? $response['response'] : false;
 			}
 		}
 
-		return $response;
+		return false;
 	}
 }
 
