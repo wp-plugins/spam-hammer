@@ -1,6 +1,6 @@
 === No Captchas, No Moderation, No Puzzles. ===
 Contributors: wpspamhammer
-Tags: post, plugin, admin, posts, comments, page, premium, spam blocker, serviceware
+Tags: post, plugin, admin, posts, comments, page, fpremium, spam blocker, serviceware
 Requires at least: 3.0.0
 Stable tag: 4.1
 License: GPLv2 or later
@@ -126,7 +126,7 @@ Not by attacking them back with Spam, but by attacking their wallets.  That is t
 
 > _Mark B. says: "I went and pulled this from my stats (from running for about week & a half with SpamHammer 3 platinum):  Spambot Blocks: 31105"_
 
-= Translations Included =
+= Languages =
 
 * العربية (Arabic)
 * čeština (Czech)
