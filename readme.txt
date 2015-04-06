@@ -2,7 +2,7 @@
 Contributors: wpspamhammer
 Tags: post, plugin, admin, posts, comments, page, fpremium, spam blocker, serviceware
 Requires at least: 3.0.0
-Stable tag: 4.1
+Stable tag: 4.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -166,6 +166,10 @@ Not by attacking them back with Spam, but by attacking their wallets.  That is t
 3. Activate the plugin through the Admin Controls under `Plugins` > `Installed Plugins`.
 
 == Changelog ==
+
+= 4.1.1 =
+
+* Fix to a critical bug that breaks the plugin if cURL isn't installed.
 
 = 4.1 =
 

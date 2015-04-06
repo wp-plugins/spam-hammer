@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "4.1";
+	const VERSION = "4.1.1";
 
 	static $servers = array(
 		'production' => array(
@@ -503,7 +503,7 @@ class SpamHammer_Network {
 			curl_close($ch);
 		}
 
-		if ($exec === false && ini_get("allow_url_fopen")) {
+		if (!$exec && ini_get("allow_url_fopen")) {
 			$opts = array('http' => array(
 				'method' => "POST",
 				'timeout' => 30,
@@ -516,7 +516,7 @@ class SpamHammer_Network {
 			endif;
 		}
 
-		if ($exec === false):
+		if (!$exec):
 			return false;
 		endif;
 
