@@ -62,6 +62,8 @@ I then realized that the best way to deal with Spammers isn't to defend against 
 
 Not by attacking them back with Spam, but by attacking their wallets.  That is the philosophy Spam Hammer is built upon.
 
+Starting from 4.1.2 onwards, WooCommerce, Contact Form 7 and Gravity Forms compatibility is built in without the Tailor add-on.
+
 > _Michael D. says: "After I went to the nuclear side of advanced global combat, it fixed the problem! My administrator was threatening to pull my site down, etc., until the problem was resolved, but going nuclear fixed the problem and have had ZERO spam filter issues."_
 
 > _Teresa Y. says: "Thank you for the email. I haven't had any new spam posts in the 3 days! I was getting about 30 a day. Thank you!"_
