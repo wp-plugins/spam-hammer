@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "4.1.1";
+	const VERSION = "4.1.2";
 
 	static $servers = array(
 		'production' => array(
