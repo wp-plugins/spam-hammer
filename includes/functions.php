@@ -149,7 +149,7 @@ class SpamHammer {
 		foreach ($definitions as $definition):
 			@list($script, $params) = explode(" ", $definition);
 
-			if ($script == pathinfo($_SERVER['SCRIPT_FILENAME'], PATHINFO_BASENAME)):
+			if ($script == pathinfo($_SERVER['SCRIPT_FILENAME'], PATHINFO_BASENAME) || ($script == "*" && $params)):
 				if ($params):
 					parse_str($params, $variables);
 
