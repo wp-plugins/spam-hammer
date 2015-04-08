@@ -166,7 +166,7 @@ class SpamHammer {
 							endif;
 						endif;
 
-						if (!isset($sources[$source][$name]) || $sources[$source][$name] != $value):
+						if (!isset($sources[$source][$name]) || ($value && $sources[$source][$name] != $value)):
 							continue 2;
 						endif;
 					endforeach;
