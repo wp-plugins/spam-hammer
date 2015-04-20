@@ -16,7 +16,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 > _Smashes Spam Comments, Trackbacks, & Registrations (and anything else, with the Tailor add-on) in 31 Languages_
 
-> _Alert: I now 100% pay for *all* of your sites, even if they are commercial.  You can now use Spam Hammer at no charge._
+> APRIL 2015+: I now 100% pay for _all_ of your sites, even if they are commercial.  Meaning, you can now use Spam Hammer at no charge.
 
 What if... you woke up in the morning, logged into your website, check for email notifications... and spam wasn't there.
 
