@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "4.1.2";
+	const VERSION = "4.1.3";
 
 	static $servers = array(
 		'production' => array(
@@ -28,10 +28,10 @@ class SpamHammer {
 
 	static function default_filters() {
 		load_plugin_textdomain('spam-hammer', false, 'spam-hammer/languages');
+		add_filter("wp_head", array(__CLASS__, "wp_head"));
 
 		if (!current_user_can("administrator")) {
 			add_filter("init", array(__CLASS__, "init"));
-			add_filter("wp_head", array(__CLASS__, "wp_head"));
 			add_filter('pre_comment_approved', array(__CLASS__, 'pre_comment_approved'));
 			add_filter("wp_footer", array(__CLASS__, "wp_footer"));
 		} else {
@@ -294,7 +294,7 @@ class SpamHammer {
 
 		$params += $defaults;
 
-		if (!$params['client_token'] || !($process = SpamHammer_Network::get("commands", "process_form", $params)) || is_array($process)):
+		if (!($process = SpamHammer_Network::get("commands", "process_form", $params))):
 			wp_die(__('You must enable JavaScript to submit forms on this website.', 'spam-hammer'));
 		endif;
 
@@ -308,9 +308,7 @@ class SpamHammer {
 	}
 
 	static function admin_options_page() {
-		if (!($settings = SpamHammer_Network::get("subscriptions", "settings")) || !is_string($settings)) {
-			$settings = print_r($settings, true);
-		}
+		$settings = SpamHammer_Network::get("subscriptions", "settings");
 
 		$servers = array();
 

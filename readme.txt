@@ -2,7 +2,7 @@
 Contributors: wpspamhammer
 Tags: post, plugin, admin, posts, comments, page, fpremium, spam blocker, serviceware
 Requires at least: 3.0.0
-Stable tag: 4.1.2
+Stable tag: 4.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -168,6 +168,10 @@ Starting from 4.1.2 onwards, WooCommerce, Contact Form 7 and Gravity Forms compa
 3. Activate the plugin through the Admin Controls under `Plugins` > `Installed Plugins`.
 
 == Changelog ==
+
+= 4.1.3 =
+
+* Stability fixes.
 
 = 4.1.2 =
 
