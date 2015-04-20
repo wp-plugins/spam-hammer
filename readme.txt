@@ -9,12 +9,14 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 "My business blog was shut down by Bluehost because the spam attack on my site was..." Blocks/Total Spam Attacks: 16,089,759
 
 == Description ==
- 
+
 > _"My business blog was shut down by Bluehost because the spam attack on my site was compromising their server performance. I installed Spam Hammer and from the moment I turned it on until now, 2 days later I have received none of the 2,300+ spam messages sent at my site and everything is running smoothly."_
 
 [Install It Now](http://www.wpspamhammer.com/install) or ["Do It For Me"](http://www.wpspamhammer.com/do-it-for-me)
 
 > _Smashes Spam Comments, Trackbacks, & Registrations (and anything else, with the Tailor add-on) in 31 Languages_
+
+> _Alert: I now 100% pay for *all* of your sites, even if they are commercial.  You can now use Spam Hammer at no charge._
 
 What if... you woke up in the morning, logged into your website, check for email notifications... and spam wasn't there.
 
@@ -175,6 +177,7 @@ Starting from 4.1.2 onwards, WooCommerce, Contact Form 7 and Gravity Forms compa
 
 = 4.1.2 =
 
+* I now 100% finance protection on *all* of your sites, even if they are commercial.
 * Support for Contact Form 7, Gravity Forms, and WooCommerce without Tailor add-on.
 
 = 4.1.1 =
@@ -197,7 +200,7 @@ Starting from 4.1.2 onwards, WooCommerce, Contact Form 7 and Gravity Forms compa
 = 4.0 =
 
 * This is a mandatory upgrade; previous versions will *not* work.
-* New: We now 100% finance your protection from the plugin on your first website.
+* New: I now 100% finance your protection from the plugin on your first website.
 * New: Add-on system.
 * New: Up to 900% loading time decrease, all around performance improvements.
 * New: Request interception system to save you bandwidth and other server resources.
