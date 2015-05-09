@@ -207,8 +207,6 @@ class SpamHammer {
 	}
 
 	static function admin_init() {
-		global $wpdb;
-
 		if (($plugins = self::get_plugins()) != false):
 			foreach (array("spammers-suck") as $plugin):
 				if (in_array($plugin, array_keys($plugins)) && is_plugin_active("{$plugin}/{$plugins[$plugin]['Script']}")):
@@ -228,7 +226,6 @@ class SpamHammer {
 
 		if (!get_option("spam_hammer_auth_token")):
 			SpamHammer_Network::get("subscriptions", "settings");
-			$wpdb->query("UPDATE {$wpdb->posts} SET ping_status = 'closed' WHERE post_type IN ('post', 'page')");
 		endif;
 
 		if (!($selectors = get_option("spam_hammer_selectors")) || !$selectors['pull'] || $selectors['pull'] <= strtotime("-1 hour")):
@@ -239,10 +236,6 @@ class SpamHammer {
 	}
 
 	static function selectors() {
-		global $wpdb;
-
-		$wpdb->query("UPDATE {$wpdb->posts} SET ping_status = 'closed' WHERE post_type IN ('post', 'page')");
-
 		if (!($selectors = SpamHammer_Network::get("subscriptions", "selectors"))):
 			return false;
 		endif;

@@ -173,7 +173,8 @@ Starting from 4.1.2 onwards, WooCommerce, Contact Form 7 and Gravity Forms compa
 
 = 4.1.4 =
 
-* Added built-in s2member support thru new login hook.
+* Added login hook (this adds native support for s2member and other registration plugins that conform to the WordPress standard).
+* Removal of dead code.
 
 = 4.1.3 =
 
