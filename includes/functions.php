@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "4.1.3";
+	const VERSION = "4.1.4";
 
 	static $servers = array(
 		'production' => array(
@@ -29,6 +29,7 @@ class SpamHammer {
 	static function default_filters() {
 		load_plugin_textdomain('spam-hammer', false, 'spam-hammer/languages');
 		add_filter("wp_head", array(__CLASS__, "wp_head"));
+		add_filter("login_head", array(__CLASS__, "wp_head"));
 
 		if (!current_user_can("administrator")) {
 			add_filter("init", array(__CLASS__, "init"));
@@ -180,6 +181,12 @@ class SpamHammer {
 	}
 
 	static function wp_head() {
+		if (!defined("SPAM_HAMMER_WP_HEAD")):
+			define("SPAM_HAMMER_WP_HEAD", true);
+		else:
+			return;
+		endif;
+
 		$phrases = array(
 			'userAgent' => __('Your User Agent Is Missing Or Invalid', 'spam-hammer'),
 			'domain' => __('Your Domain Is Missing Or Invalid', 'spam-hammer'),
