@@ -1,7 +1,7 @@
 <?php
 
 class SpamHammer {
-	const VERSION = "4.1.4";
+	const VERSION = "4.1.5";
 
 	static $servers = array(
 		'production' => array(
@@ -244,27 +244,23 @@ class SpamHammer {
 	}
 
 	static function admin_head() {
-		$settings = pathinfo($_SERVER['SCRIPT_FILENAME'], PATHINFO_BASENAME) == "admin.php" && $_GET['page'] == "spam_hammer";
+		$scripts = array("head.min.js");
 
-		$data = array(
+		if (pathinfo($_SERVER['SCRIPT_FILENAME'], PATHINFO_BASENAME) == "admin.php" && $_GET['page'] == "spam_hammer"):
+			$scripts[] = "settings.min.js";
+		endif;
+
+		wp_enqueue_script("jquery");
+
+		vprintf('<script async defer src="//%1$s/js/admin/??%7$s" id="spam-hammer-wp-admin-head" data-spam-hammer-server="%1$s" data-spam-hammer-auth-token="%2$s" data-spam-hammer-timezone-string="%3$s" data-spam-hammer-platform="%4$s" data-spam-hammer-admin="%5$s" data-spam-hammer-locale="%6$s"></script>', array(
 			get_option("spam_hammer_server"),
 			get_option("spam_hammer_auth_token"),
 			get_option("timezone_string"),
 			"wordpress",
 			get_option("admin_email"),
-			str_replace("_", "-", get_locale())
-		);
-
-		wp_enqueue_script("jquery");
-
-		$tags = array(
-			'<script async defer src="//%1$s/js/admin/head.min.js" id="spam-hammer-wp-admin-head" data-spam-hammer-server="%1$s" data-spam-hammer-auth-token="%2$s" data-spam-hammer-timezone-string="%3$s" data-spam-hammer-platform="%4$s" data-spam-hammer-admin="%5$s" data-spam-hammer-locale="%6$s"></script>',
-			$settings ? '<script async defer src="//%1$s/js/admin/settings.min.js"></script>' : ""
-		);
-
-		foreach (array_filter($tags) as $tag):
-			vprintf($tag, $data);
-		endforeach;
+			str_replace("_", "-", get_locale()),
+			implode(",", $scripts)
+		));
 	}
 
 	static function update_remote_settings() {
